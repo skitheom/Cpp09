@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Others
+*.pdf
+cpp_09.tgz

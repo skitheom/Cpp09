@@ -1,0 +1,33 @@
+name: Build Exercises on Ubuntu
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install g++-9 for C++98 support
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++-9
+          export CXX=g++-9
+
+      - name: Build all exercises with Makefile
+        run: |
+          find ./ex* -type d | sort | while read ex_dir; do
+            if [ -f "$ex_dir/Makefile" ]; then
+              echo "Building in $ex_dir"
+              make -C "$ex_dir" || exit 1
+            else
+              echo "No Makefile found in $ex_dir, skipping..."
+            fi
+          done
