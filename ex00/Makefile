@@ -6,14 +6,14 @@
 #    By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 16:15:58 by sakitaha          #+#    #+#              #
-#    Updated: 2025/01/27 16:32:41 by sakitaha         ###   ########.fr        #
+#    Updated: 2025/01/28 03:10:47 by sakitaha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX      := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98 -MMD -MP
 
-SRCS     := main.cpp
+SRCS     := main.cpp BitcoinExchange.cpp
 OBJS     := $(SRCS:.cpp=.o)
 DEPS     := $(OBJS:.o=.d)
 
@@ -40,6 +40,7 @@ re: fclean all
 run: $(NAME)
 	@echo "== Running Tests  =="
 	./$(NAME)
+	./$(NAME) input.txt
 	@echo "== Tests Completed =="
 
 test: CXXFLAGS += -DDISPLAY_DEBUG_MSG

@@ -33,4 +33,7 @@
 
 # Others
 *.pdf
-cpp_09.tgz
+cpp_09*
+tmp.md
+.DS_Store
+.vscode
