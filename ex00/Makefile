@@ -6,7 +6,7 @@
 #    By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 16:15:58 by sakitaha          #+#    #+#              #
-#    Updated: 2025/01/28 03:10:47 by sakitaha         ###   ########.fr        #
+#    Updated: 2025/02/04 13:02:33 by sakitaha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,10 @@ re: fclean all
 
 run: $(NAME)
 	@echo "== Running Tests  =="
-	./$(NAME)
+	@echo "--- Basic Test ---"
 	./$(NAME) input.txt
+	@echo "\n--- Edge Case test ---"
+	./$(NAME) edgecase.txt
 	@echo "== Tests Completed =="
 
 test: CXXFLAGS += -DDISPLAY_DEBUG_MSG
