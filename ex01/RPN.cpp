@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:57:32 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/06 20:00:40 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/02/06 20:52:40 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 const std::string RPN::ERR_EMPTY_STACK = "cannot calculate due to empty stack";
 const std::string RPN::ERR_INVALID_INPUT = "invalid RPN expression";
 const std::string RPN::ERR_INVALID_OP = "invalid operator";
+const std::string RPN::ERR_OVERFLOW = "overflow detected";
 const std::string RPN::ERR_DIV_ZERO = "division by zero";
 
 RPN::RPN() {}
@@ -91,29 +92,43 @@ int RPN::prepareValue(std::stack<int> &stack) {
 }
 
 int RPN::basicCalculater(char token, int a, int b) {
-  int result;
+
+#ifdef DISPLAY_DEBUG_MSG
+  std::cerr << "[Debug] Step: " << a << " " << token << " " << b << " = ";
+#endif
+  long long result;
   switch (token) {
   case '+':
-    result = a + b;
+    result = static_cast<long long>(a) + b;
     break;
   case '-':
-    result = a - b;
+    result = static_cast<long long>(a) - b;
     break;
   case '*':
-    result = a * b;
+    if ((a > 0 && b > 0 && std::numeric_limits<int>::max() / b < a) ||
+        (a > 0 && b < 0 && std::numeric_limits<int>::min() / a > b) ||
+        (a < 0 && b > 0 && std::numeric_limits<int>::min() / b > a) ||
+        (a < 0 && b < 0 && std::numeric_limits<int>::max() / a > b)) {
+      throw std::overflow_error(ERR_OVERFLOW);
+    }
+    result = static_cast<long long>(a) * b;
     break;
   case '/':
-    if (b == 0)
+    if (b == 0) {
       throw std::runtime_error(ERR_DIV_ZERO);
-    result = a / b;
+    }
+    result = static_cast<long long>(a) / b;
     break;
   default:
     throw std::runtime_error(ERR_INVALID_OP);
   }
 
 #ifdef DISPLAY_DEBUG_MSG
-  std::cerr << "[Debug] Step: " << a << " " << token << " " << b << " = "
-            << result << "\n";
+  std::cerr << result << "\n";
 #endif
-  return result;
+  if (result > std::numeric_limits<int>::max() ||
+      result < std::numeric_limits<int>::min()) {
+    throw std::overflow_error(ERR_OVERFLOW);
+  }
+  return static_cast<int>(result);
 }

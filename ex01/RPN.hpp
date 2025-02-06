@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:57:34 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/06 20:04:35 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/02/06 20:30:43 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ private:
   static const std::string ERR_EMPTY_STACK;
   static const std::string ERR_INVALID_INPUT;
   static const std::string ERR_INVALID_OP;
+  static const std::string ERR_OVERFLOW;
   static const std::string ERR_DIV_ZERO;
 
   static bool isOperatorChar(char c);
