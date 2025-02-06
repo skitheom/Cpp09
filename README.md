@@ -63,3 +63,43 @@ token分割の方法について
 
 - [Learning c++98 in 2024](https://www.reddit.com/r/cpp_questions/comments/1986lga/learning_c98_in_2024/)
 
+## 複数のリモートリポジトリを設定する (Githubと42リポジトリの使い分け)
+
+### `git remote add`
+追加するラベルは、通常 origin とは別の名前を付ける
+```
+git remote add [任意のラベル] [新規で追加したいリモートリポジトリのアドレス]
+```
+Ex.
+```
+git remote add github git@github.com:skitheom/Cpp09.git
+git remote add gitlab git@gitlab.com:skitheom/Cpp09.git
+```
+
+### `git remote -v`
+現在登録されているリモートリポジトリを確認
+```
+ ~/code/cppModules/Cpp09/ex01/ [main*] git remote -v
+github  git@github.com:skitheom/Cpp09.git (fetch)
+github  git@github.com:skitheom/Cpp09.git (push)
+gitlab  git@gitlab.com:skitheom/Cpp09.git (fetch)
+gitlab  git@gitlab.com:skitheom/Cpp09.git (push)
+```
+
+### 特定のリモートへ `push`, `fetch`, `pull`
+
+`git push [ラベル] main`
+
+Ex.
+```
+git push github main   # GitHub に push
+git push gitlab main   # GitLab に push
+
+git fetch github       # GitHub の最新状態を取得
+git fetch gitlab       # GitLab の最新状態を取得
+
+git pull github main   # GitHub から `main` を pull
+git pull gitlab main   # GitLab から `main` を pull
+```
+
+複数のリモートリポジトリを設定することで、githubのコミット履歴を42のリポジトリに共有できる（reviewに便利）
