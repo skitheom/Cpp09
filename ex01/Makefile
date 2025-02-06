@@ -6,7 +6,7 @@
 #    By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 16:15:58 by sakitaha          #+#    #+#              #
-#    Updated: 2025/02/06 20:56:28 by sakitaha         ###   ########.fr        #
+#    Updated: 2025/02/06 21:00:12 by sakitaha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ run: $(NAME)
 	@echo "\n--- Edge Case Test ---"
 	./$(NAME) "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 *"
 	./$(NAME) "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 *" || true
+	./$(NAME) "1 2 * 2 / 2 + 5 * 6 - 1 3 * - 4 5 * * 8 /"
 	@echo ""
 	@echo "== Tests Completed =="
 

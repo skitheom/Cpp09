@@ -18,6 +18,10 @@
 - 状態を持つ必要はない
 - stackを選択
 
+
+ex02
+マージ挿入ソートアルゴリズム
+
 ## References
 
 [CPP Module 09(For 42 École Students Only)](https://projects.intra.42.fr/projects/cpp-module-09)
