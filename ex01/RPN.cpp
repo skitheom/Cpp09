@@ -6,12 +6,13 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:57:32 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/06 20:52:40 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/02/06 21:18:04 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
 #include <iostream>
+#include <limits>
 #include <sstream>
 
 const std::string RPN::ERR_EMPTY_STACK = "cannot calculate due to empty stack";
