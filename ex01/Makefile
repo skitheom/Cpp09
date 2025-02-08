@@ -6,7 +6,7 @@
 #    By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 16:15:58 by sakitaha          #+#    #+#              #
-#    Updated: 2025/02/06 21:00:12 by sakitaha         ###   ########.fr        #
+#    Updated: 2025/02/07 14:55:28 by sakitaha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,15 +43,18 @@ run: $(NAME)
 	./$(NAME) "7 7 * 7 -"
 	./$(NAME) "1 2 * 2 / 2 * 2 4 - +"
 	./$(NAME) "(1 + 1)" || true
-	@echo "\n--- Additional Error Case Test ---"
+	@echo "\n--- Error Case Test ---"
 	./$(NAME) "1 2 + -" || true
 	./$(NAME) "42 + 1" || true
 	./$(NAME) "7 % 4" || true
 	./$(NAME) "4 9 + 0 /" || true
-	@echo "\n--- Edge Case Test ---"
-	./$(NAME) "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 *"
 	./$(NAME) "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 *" || true
+	@echo "\n--- Additional Test ---"
+	./$(NAME) "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 *"
 	./$(NAME) "1 2 * 2 / 2 + 5 * 6 - 1 3 * - 4 5 * * 8 /"
+	./$(NAME) "2 1 + 3 *"
+	./$(NAME) "4 7 5 / +"
+	./$(NAME) "9 6 9 3 + 1 * / * 7 + 5 +"
 	@echo ""
 	@echo "== Tests Completed =="
 
