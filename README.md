@@ -20,9 +20,9 @@ TODO: headerの中身を単に読み飛ばさずに、正しい形式かをチ�
 - 状態を持つ必要はない
 - stackを選択
 
-
-ex02
-マージ挿入ソートアルゴリズム
+### Exercise 02: PmergeMe
+- Merge-insertion sort
+- The Art of Computer Programming (TAOCP) を参照すればok
 
 ## References
 
@@ -39,26 +39,11 @@ __Exercise 01__
 - [How to Split a String by a Delimiter in C++?](https://www.geeksforgeeks.org/how-to-split-string-by-delimiter-in-cpp/) ... token分割の方法について
 - [Evaluate the Value of an Arithmetic Expression in Reverse Polish Notation in Java](https://www.geeksforgeeks.org/evaluate-the-value-of-an-arithmetic-expression-in-reverse-polish-notation-in-java/)
 - [【C言語】算術オーバーフローと回避方法](https://hiroyukichishiro.com/arithmetic-overflow-in-c-language/) ... overflow処理
+- [Reverse Polish Notation](https://mathworld.wolfram.com/ReversePolishNotation.html)
 
 __Exercise 02__
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
+- [Art of Computer Programming, The: Volume 3: Sorting and Searching, 2nd Edition, p.184](https://www.informit.com/store/art-of-computer-programming-volume-3-sorting-and-searching-9780201896855)
+- [The　Art　of　Computer　Programming　Volume　3　Sorting　and　Searching　Second　Edition　日本語版](https://www.kadokawa.co.jp/product/312356800000/)
 
 ## ???
 
