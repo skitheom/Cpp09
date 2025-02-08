@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:57:32 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/06 21:18:04 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:11:18 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ bool RPN::isValidInput(const std::string &str) {
     if (i != str.size() - 1 && str[i + 1] != ' ') {
       return false;
     }
-    hasValue = true;
+    if (!hasValue) {
+      hasValue = true;
+    }
   }
   return hasValue;
 }
