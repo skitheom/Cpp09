@@ -60,6 +60,13 @@ cはsort済みの部分（元`a1, b1, a2, b2, a3, b3`）で、`a4`以降は引�
 References
 Knuth, D. E. (1998). Sorting and searching.
 
+#### Jacobsthal 数列の一般項目
+
+ヤコブスタール数列の一般項：
+$J_n = \frac{2^n - (-1)^n}{3}$
+
+
+
 ## References
 
 [CPP Module 09(For 42 École Students Only)](https://projects.intra.42.fr/projects/cpp-module-09)
@@ -85,6 +92,7 @@ __General__
 - [Handling exceptions](https://en.cppreference.com/w/cpp/language/catch)
 - [Measure execution time with high precision in C/C++](https://www.geeksforgeeks.org/measure-execution-time-with-high-precision-in-c-c/)
 c++11のchrono::high_resolution_clock::now();は使えない
+- [Jacobsthal and Jacobsthal-Lucas numbers](https://www.geeksforgeeks.org/jacobsthal-and-jacobsthal-lucas-numbers/) ヤコブスタル
 
 ## ???
 
