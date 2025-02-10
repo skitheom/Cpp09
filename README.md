@@ -27,6 +27,39 @@ TODO: long long はc98では使えないのでは？要確認
 - Merge-insertion sort
 - The Art of Computer Programming (TAOCP) を参照すればok
 
+#### Merge insertion.
+
+Merge Insertion Sort (Knuth, TAOCP vol.3)
+
+1. pairを作る
+
+`K1:K2, K3:K4, ..., K19:K20;`
+要素数が21の場合、10個のpairに要素を分割して比較
+
+2. 各pairのうち、大きい方の値(Leaders)をMerge Sort
+
+`a1->a2->a3->a4->a5->a6->a7->a8->a9->a10`
+ここでsortされる各aは、ペアよりも大きな値を持つ"leaders"
+それぞれ自身より小さい片割れ"followers"を持つ
+
+3. Jacobsthal 数列に従い、小さい方の値(followers)を挿入
+
+`b3`(`a3`のペア)を`{b1, a1, a2}`に挿入
+次に`b2`を`a2`未満の位置に挿入
+
+4. 適切な順序で比較する
+
+`c1->c2->c3->c4->c5->c6->a4->a5->a6->a7->a8->a9->a10`
+cはsort済みの部分（元`a1, b1, a2, b2, a3, b3`）で、`a4`以降は引き続きペア`b`を持つ
+
+`b5`を主鎖のなかの適切な位置に挿入した後で、`b4`を3つの値と比較しながらいれていく
+この場合はまず`c4`,`c2`,`c6`の順に比較する
+
+`b7`ではなく先に`b11`を主鎖に挿入する。比較対象は`b10`,`b9`,`b8`,`b7`,`b6`である
+
+References
+Knuth, D. E. (1998). Sorting and searching.
+
 ## References
 
 [CPP Module 09(For 42 École Students Only)](https://projects.intra.42.fr/projects/cpp-module-09)
@@ -47,7 +80,7 @@ __Exercise 01__
 __Exercise 02__
 - [Art of Computer Programming, The: Volume 3: Sorting and Searching, 2nd Edition, p.184](https://www.informit.com/store/art-of-computer-programming-volume-3-sorting-and-searching-9780201896855)
 - [The Art of Computer Programming Volume 3 Sorting and Searching Second Edition 日本語版](https://www.kadokawa.co.jp/product/312356800000/)
-
+- [CPP09 Ford–Johnson algorithm](https://medium.com/@toukmati2000/cpp09-ford-johnson-algorithm-e6ad43288d4b)
 __General__
 - [Handling exceptions](https://en.cppreference.com/w/cpp/language/catch)
 
