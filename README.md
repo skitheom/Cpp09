@@ -14,11 +14,14 @@
 - mapを選択
 
 TODO: headerの中身を単に読み飛ばさずに、正しい形式かをチェックする
+TODO: a float or a positive integer, between 0 and 1000 のチェック
 
 ### Exercise 01: Reverse Polish Notation
 - Reverse Polish Notation は算式記法。被演算子のあとに演算子を置く
 - 状態を持つ必要はない
 - stackを選択
+
+TODO: long long はc98では使えないのでは？要確認
 
 ### Exercise 02: PmergeMe
 - Merge-insertion sort
@@ -43,7 +46,10 @@ __Exercise 01__
 
 __Exercise 02__
 - [Art of Computer Programming, The: Volume 3: Sorting and Searching, 2nd Edition, p.184](https://www.informit.com/store/art-of-computer-programming-volume-3-sorting-and-searching-9780201896855)
-- [The　Art　of　Computer　Programming　Volume　3　Sorting　and　Searching　Second　Edition　日本語版](https://www.kadokawa.co.jp/product/312356800000/)
+- [The Art of Computer Programming Volume 3 Sorting and Searching Second Edition 日本語版](https://www.kadokawa.co.jp/product/312356800000/)
+
+__General__
+- [Handling exceptions](https://en.cppreference.com/w/cpp/language/catch)
 
 ## ???
 
