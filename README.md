@@ -83,6 +83,8 @@ __Exercise 02__
 - [CPP09 Ford–Johnson algorithm](https://medium.com/@toukmati2000/cpp09-ford-johnson-algorithm-e6ad43288d4b)
 __General__
 - [Handling exceptions](https://en.cppreference.com/w/cpp/language/catch)
+- [Measure execution time with high precision in C/C++](https://www.geeksforgeeks.org/measure-execution-time-with-high-precision-in-c-c/)
+c++11のchrono::high_resolution_clock::now();は使えない
 
 ## ???
 
