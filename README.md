@@ -42,7 +42,7 @@ Merge Insertion Sort (Knuth, TAOCP vol.3)
 ここでsortされる各aは、ペアよりも大きな値を持つ"leaders"
 それぞれ自身より小さい片割れ"followers"を持つ
 
-3. Jacobsthal 数列に従い、小さい方の値(followers)を挿入
+3. Jacobsthal 数列に従い、小さい方の値(followers)を挿入(二分探索)
 
 `b3`(`a3`のペア)を`{b1, a1, a2}`に挿入
 次に`b2`を`a2`未満の位置に挿入

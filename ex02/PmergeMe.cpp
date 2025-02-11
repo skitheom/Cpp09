@@ -43,35 +43,15 @@ void PmergeMe::sort(std::deque<int> &deq) {
   mergeInsertionSort(deq);
 }
 
-/*
-
-
-int main() {
-    std::vector<std::pair<int, int> > pairs; // ✅ C++98 の正しい書き方
-
-    // std::make_pair を使ってペアを追加
-    pairs.push_back(std::make_pair(3, 5));
-    pairs.push_back(std::make_pair(7, 9));
-
-    // ペアの内容を表示
-    for (size_t i = 0; i < pairs.size(); ++i) {
-        std::cout << "Pair " << i << ": (" << pairs[i].first << ", " <<
-pairs[i].second << ")" << std::endl;
-    }
-
-    return 0;
-}
-*/
-
 void PmergeMe::mergeInsertionSort(std::vector<int> &vec) {
   const size_t size = vec.size();
 
   // 1.pairを作る
   std::vector<std::pair<int, int> > pairs;
-  std::vector<int> singleElement;
+  int singleElement = -1;
 
   if (size % 2 != 0) {
-    singleElement.push_back(vec.back());
+    singleElement = vec.back();
     vec.pop_back();
   }
   pairs.reserve(size / 2); // vectorにだけ必要
@@ -80,26 +60,46 @@ void PmergeMe::mergeInsertionSort(std::vector<int> &vec) {
   // 2. 各pairのうち、大きい方の値(Leaders)をMerge Sortする
   mergeSortPairs(pairs, 0, pairs.size() - 1);
 
-  // 3. 最初だけ特殊で、あとはJacobsthal数列に従いfollowersを挿入
+  // 3. Jacobsthal数列に従いleaders & followersを挿入
   std::vector<int> sorted;
   sorted.reserve(size);
-  sorted.push_back(pairs[0].second); // secondが最小値
-  // Leadersはsortedにすべていれる
-  for (size_t i = 0; i < pairs.size(); ++i) {
-    sorted.push_back(pairs[i].first);
-  }
+  insertJacobsthal(pairs, sorted);
 
-  // [...]
+  // 4.singleElementをbinaryInsertion
+  if (singleElement != -1) {
+    binaryInsertion(sorted, singleElement);
+  }
+  // 5. result を　originalのvecに入れ替える
+  // 最初から、vecを初期化->書き換えるでも良かったし、
+  // sortedの結果を別のvectorで返す設計でも良かったのかもしれない
+  // 結局sortが同一データ構造上で起こるべきかどうかという問題ではある
+  vec = sorted;
 }
 
 void PmergeMe::mergeInsertionSort(std::deque<int> &deq) {
-  std::deque<std::pair<int, int> > pairs;
-  std::deque<int> singleElement;
+  const size_t size = deq.size();
 
-  if (deq.size() % 2 != 0) {
-    singleElement.push_back(deq.back());
+  // 1.pairを作る
+  std::deque<std::pair<int, int> > pairs;
+  int singleElement = -1;
+
+  if (size % 2 != 0) {
+    singleElement = deq.back();
     deq.pop_back();
   }
   buildPairs(deq, pairs);
-  // ソート処理...
+
+  // 2. 各pairのうち、大きい方の値(Leaders)をMerge Sortする
+  mergeSortPairs(pairs, 0, pairs.size() - 1);
+
+  // 3. Jacobsthal数列に従いleaders & followersを挿入
+  std::deque<int> sorted;
+  insertJacobsthal(pairs, sorted);
+
+   // 4.singleElementをbinaryInsertion
+   if (singleElement != -1) {
+    binaryInsertion(sorted, singleElement);
+  }
+  // 5. result を　originalのdequeに入れ替える
+  deq = sorted;
 }
