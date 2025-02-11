@@ -65,7 +65,17 @@ Knuth, D. E. (1998). Sorting and searching.
 ヤコブスタール数列の一般項：
 $J_n = \frac{2^n - (-1)^n}{3}$
 
-
+```cpp
+ Jacobsthal number 参考値
+ 初期値: prev: 0, curr: 1
+ i = 0: prev: 1, curr: 1
+ i = 1: prev: 1, curr: 3
+ i = 2: prev: 3, curr: 5
+ i = 3: prev: 5, curr: 11
+ i = 4: prev: 11, curr: 21
+ i = 5: prev: 21, curr: 43
+ i = 6: prev: 43, curr: 85
+ ```
 
 ## References
 
