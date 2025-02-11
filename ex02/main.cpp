@@ -6,15 +6,24 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 01:51:57 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/11 23:41:59 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/02/12 03:19:13 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "PmergeMe.hpp"
 #include "Utils.hpp"
 #include <deque>
 #include <iomanip>
 #include <iostream>
 #include <vector>
+
+template <typename T> static double getSortTime(T &container) {
+
+  clock_t start = clock();
+  PmergeMe::sort(container);
+  clock_t end = clock();
+  return (static_cast<double>(end - start) * 1000000.0 / CLOCKS_PER_SEC);
+}
 
 int main(int argc, const char *argv[]) {
   if (argc < 2) {
@@ -27,24 +36,28 @@ int main(int argc, const char *argv[]) {
     Utils::parseInput(argc, argv, vec);
     std::deque<int> deq(vec.begin(), vec.end());
 
-    Utils::printContainer("Before (vector): ", vec);
 #ifdef DISPLAY_DEBUG_MSG
-    Utils::printContainer("Before (deque): ", deq);
+    Utils::printContainer("Before (vec): ", vec);
+    Utils::printContainer("Before (deq): ", deq);
+#else
+    Utils::printContainer("Before: ", vec);
 #endif
 
-    double timeVector = Utils::getSortTime(vec);
-    double timeDeque = Utils::getSortTime(deq);
+    double timeVector = getSortTime(vec);
+    double timeDeque = getSortTime(deq);
 
-    Utils::printContainer("After (vector): ", vec);
 #ifdef DISPLAY_DEBUG_MSG
-    Utils::printContainer("After (deque): ", deq);
-#endif
-
+    Utils::printContainer("\nAfter (vec):  ", vec);
+    Utils::printContainer("After (deq):  ", deq);
     std::cout << std::fixed << std::setprecision(6);
-    std::cout << "Time to process " << vec.size()
+#else
+    Utils::printContainer("After:  ", vec);
+#endif
+
+    std::cout << "Time to process a range of " << vec.size()
               << " elements with std::vector : " << timeVector << " us\n";
-    std::cout << "Time to process " << deq.size()
-              << " elements with std::deque : " << timeDeque << " us\n";
+    std::cout << "Time to process a range of " << deq.size()
+              << " elements with std::deque  : " << timeDeque << " us\n";
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
     return 1;

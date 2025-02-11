@@ -36,6 +36,9 @@ void PmergeMe::sort(std::vector<int> &vec) {
   pairs.reserve(vec.size() / 2);
   sorted.reserve(vec.size());
 
+#ifdef DISPLAY_DEBUG_MSG
+    std::cout << "\nSorting vector ...\n";
+#endif
   mergeInsertionSort(vec, pairs, sorted);
 }
 
@@ -47,6 +50,9 @@ void PmergeMe::sort(std::deque<int> &deq) {
   std::deque<std::pair<int, int> > pairs;
   std::deque<int> sorted;
 
+#ifdef DISPLAY_DEBUG_MSG
+    std::cout << "\nSorting deque ...\n";
+#endif
   mergeInsertionSort(deq, pairs, sorted);
 }
 

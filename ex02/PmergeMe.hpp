@@ -6,13 +6,14 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:48:53 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/11 23:39:42 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/02/12 01:46:11 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
+#include "Utils.hpp"
 #include <algorithm>
 #include <deque>
 #include <iostream>
@@ -74,6 +75,7 @@ private:
 
   template <typename T>
   static void mergePairs(T &pairs, size_t left, size_t mid, size_t right) {
+
     size_t sizeLeft = mid - left + 1;
     size_t sizeRight = right - mid;
     T leftPairs;
@@ -138,6 +140,9 @@ private:
   template <typename T, typename U>
   static void insertFollowers(const T &pairs, U &sorted, size_t prevJacob,
                               size_t currJacob) {
+    if (prevJacob == currJacob) { // prevJacob:1, currJacob:1 をskip
+      return;
+    }
     if (currJacob < pairs.size()) {
       binaryInsertion(sorted, pairs[currJacob].second);
     }
@@ -160,16 +165,35 @@ private:
    */
   template <typename T, typename U>
   static void mergeInsertionSort(U &unsorted, T &pairs, U &sorted) {
+#ifdef DISPLAY_DEBUG_MSG
+    Utils::printContainer("\tUnsorted container:", unsorted);
+#endif
     int singleElement = -1;
     if (unsorted.size() % 2 != 0) {
       singleElement = unsorted.back();
       unsorted.pop_back();
+#ifdef DISPLAY_DEBUG_MSG
+      std::cout << "\tSingle element handled: " << singleElement << "\n";
+#endif
     }
     buildPairs(pairs, unsorted);
+#ifdef DISPLAY_DEBUG_MSG
+    Utils::printPairs("\tAfter buildPairs:", pairs);
+#endif
     mergeSortPairs(pairs, 0, pairs.size() - 1);
+#ifdef DISPLAY_DEBUG_MSG
+    Utils::printPairs("\tAfter sortPairs: ", pairs);
+#endif
     insertJacobsthal(pairs, sorted);
+#ifdef DISPLAY_DEBUG_MSG
+    Utils::printContainer("\tAfter insertJacobsthal:", sorted);
+#endif
     if (singleElement != -1) {
       binaryInsertion(sorted, singleElement);
+#ifdef DISPLAY_DEBUG_MSG
+      std::cout << "\tAfter inserting \'" << singleElement << "\' ";
+      Utils::printContainer(":", sorted);
+#endif
     }
     unsorted = sorted;
   }
