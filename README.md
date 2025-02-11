@@ -35,12 +35,13 @@ Merge Insertion Sort (Knuth, TAOCP vol.3)
 
 `K1:K2, K3:K4, ..., K19:K20;`
 要素数が21の場合、10個のpairに要素を分割して比較
+- Leaders:   大きい値を持つ
+- Followers: 小さい値を持つ
 
-2. 各pairのうち、大きい方の値(Leaders)をMerge Sort
+2. 各pairをLeadersの値をもとにMerge Sort
 
 `a1->a2->a3->a4->a5->a6->a7->a8->a9->a10`
-ここでsortされる各aは、ペアよりも大きな値を持つ"leaders"
-それぞれ自身より小さい片割れ"followers"を持つ
+大きい方の値(leaders)をsort
 
 3. Jacobsthal 数列に従い、小さい方の値(followers)を挿入(二分探索)
 
@@ -50,7 +51,9 @@ Merge Insertion Sort (Knuth, TAOCP vol.3)
 4. 適切な順序で比較する
 
 `c1->c2->c3->c4->c5->c6->a4->a5->a6->a7->a8->a9->a10`
-cはsort済みの部分（元`a1, b1, a2, b2, a3, b3`）で、`a4`以降は引き続きペア`b`を持つ
+cはsort済みの部分（元`a1, b1, a2, b2, a3, b3`）
+
+`a4`以降は引き続きペア`b`を持つ
 
 `b5`を主鎖のなかの適切な位置に挿入した後で、`b4`を3つの値と比較しながらいれていく
 この場合はまず`c4`,`c2`,`c6`の順に比較する
