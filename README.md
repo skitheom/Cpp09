@@ -98,11 +98,9 @@ __Exercise 02__
 - [Art of Computer Programming, The: Volume 3: Sorting and Searching, 2nd Edition, p.184](https://www.informit.com/store/art-of-computer-programming-volume-3-sorting-and-searching-9780201896855)
 - [The Art of Computer Programming Volume 3 Sorting and Searching Second Edition 日本語版](https://www.kadokawa.co.jp/product/312356800000/)
 - [CPP09 Ford–Johnson algorithm](https://medium.com/@toukmati2000/cpp09-ford-johnson-algorithm-e6ad43288d4b)
-__General__
-- [Handling exceptions](https://en.cppreference.com/w/cpp/language/catch)
 - [Measure execution time with high precision in C/C++](https://www.geeksforgeeks.org/measure-execution-time-with-high-precision-in-c-c/)
 c++11のchrono::high_resolution_clock::now();は使えない
-- [Jacobsthal and Jacobsthal-Lucas numbers](https://www.geeksforgeeks.org/jacobsthal-and-jacobsthal-lucas-numbers/) ヤコブスタル
+- [Jacobsthal and Jacobsthal-Lucas numbers](https://www.geeksforgeeks.org/jacobsthal-and-jacobsthal-lucas-numbers/) Jacobsthalの計算方法（ver.3を使用）
 
 ## ???
 

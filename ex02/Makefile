@@ -6,14 +6,14 @@
 #    By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 16:15:58 by sakitaha          #+#    #+#              #
-#    Updated: 2025/02/10 15:19:57 by sakitaha         ###   ########.fr        #
+#    Updated: 2025/02/11 23:43:43 by sakitaha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX      := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98 -MMD -MP
 
-SRCS     := PmergeMe.cpp main.cpp
+SRCS     := PmergeMe.cpp Utils.cpp main.cpp
 OBJS     := $(SRCS:.cpp=.o)
 DEPS     := $(OBJS:.o=.d)
 NAME     := PmergeMe
@@ -56,7 +56,8 @@ endif
 	@echo "\n== Tests Completed =="
 
 test: CXXFLAGS += -DDISPLAY_DEBUG_MSG
-test: re run
+test: re
+	./$(NAME) 3 5 9 7 4
 
 debug: CXXFLAGS += -fsanitize=address -g
 debug: $(NAME)

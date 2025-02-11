@@ -49,3 +49,11 @@ void PmergeMe::sort(std::deque<int> &deq) {
 
   mergeInsertionSort(deq, pairs, sorted);
 }
+
+void PmergeMe::xreserve(std::vector<std::pair<int, int> > &pairs, size_t size) {
+  pairs.reserve(size);
+}
+void PmergeMe::xreserve(std::deque<std::pair<int, int> > &pairs, size_t size) {
+  (void)pairs;
+  (void)size;
+}

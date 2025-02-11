@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:48:53 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/11 20:16:53 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/02/11 23:39:42 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 #include <algorithm>
 #include <deque>
 #include <iostream>
+#include <type_traits>
 #include <utility>
 #include <vector>
+
 class PmergeMe {
 public:
   static void sort(std::vector<int> &vec);
@@ -29,6 +31,9 @@ private:
   ~PmergeMe();
 
   PmergeMe &operator=(const PmergeMe &other);
+
+  static void xreserve(std::vector<std::pair<int, int> > &pairs, size_t size);
+  static void xreserve(std::deque<std::pair<int, int> > &pairs, size_t size);
 
   /**
    * Step 1: Build pairs from the unsorted container.
@@ -73,9 +78,9 @@ private:
     size_t sizeRight = right - mid;
     T leftPairs;
     T rightPairs;
-    leftPairs.reserve(sizeLeft);
-    rightPairs.reserve(sizeRight);
 
+    xreserve(leftPairs, sizeLeft);
+    xreserve(rightPairs, sizeRight);
     for (size_t i = 0; i < sizeLeft; ++i) {
       leftPairs.push_back(pairs[left + i]);
     }
@@ -156,11 +161,11 @@ private:
   template <typename T, typename U>
   static void mergeInsertionSort(U &unsorted, T &pairs, U &sorted) {
     int singleElement = -1;
-    if (size % 2 != 0) {
+    if (unsorted.size() % 2 != 0) {
       singleElement = unsorted.back();
       unsorted.pop_back();
     }
-    buildPairs(vec, pairs);
+    buildPairs(pairs, unsorted);
     mergeSortPairs(pairs, 0, pairs.size() - 1);
     insertJacobsthal(pairs, sorted);
     if (singleElement != -1) {
