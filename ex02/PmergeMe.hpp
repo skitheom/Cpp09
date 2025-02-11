@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:48:53 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/12 01:46:11 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/02/12 03:27:47 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <algorithm>
 #include <deque>
 #include <iostream>
-#include <type_traits>
 #include <utility>
 #include <vector>
 
