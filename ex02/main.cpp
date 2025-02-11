@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 01:51:57 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/10 16:48:13 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:54:15 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,31 @@ const double CLOCKS_PER_USEC = static_cast<double>(CLOCKS_PER_SEC) / 1000000.0;
 template <typename T> double getSortTime(T &t) {
   clock_t start = clock();
   PmergeMe::sort(t);
-  clock_t end = clock();
-  return (static_cast<double>(end - start) / CLOCKS_PER_USEC);
+  return (static_cast<double>(clock() - start) / CLOCKS_PER_USEC);
 }
 
-template <typename T> void printContainer(const T &t) {
-  for (size_t i = 0; i < t.size(); ++i) {
-    if (i == 4 && t.size() > 5) {
-      std::cout << "[...]\n";
-      break;
+template <typename T> void printContainer(const std::string &msg, const T &t) {
+  std::cout << msg;
+  for (typename T::iterator it = t.begin(); it != t.end(); ++it) {
+    if (it != t.begin()) {
+      std::cout << " ";
     }
-    std::cout << t[i] << (i < t.size() - 1 ? " " : "\n");
+    std::cout << *it;
   }
+  std::cout << std::endl;
 }
 
-template <typename T> bool parseInput(int argc, const char **argv, T &t) {
+bool parseInputToVector(int argc, const char **argv, std::vector<int> &vec) {
+  vec.reserve(argc - 1);
   for (int i = 1; i < argc; ++i) {
     char *endptr;
     errno = 0;
     long num = std::strtol(argv[i], &endptr, 10);
-
-    if (errno == ERANGE || num > INT_MAX || num < 0 || *endptr != '\0') {
+    if (errno != 0 || num < 0 || num > INT_MAX || *endptr != '\0') {
       std::cerr << "Error: Invalid input: " << argv[i] << std::endl;
       return false;
     }
-    t.push_back(static_cast<int>(num));
+    vec.push_back(static_cast<int>(num));
   }
   return true;
 }
@@ -59,27 +59,22 @@ int main(int argc, const char *argv[]) {
     return 1;
   }
   std::vector<int> vec;
-  std::deque<int> deq;
-
-  if (!parseInput(argc, argv, vec) || !parseInput(argc, argv, deq)) {
+  if (!parseInputToVector(argc, argv, vec)) {
     return 1;
   }
+  std::deque<int> deq(vec.begin(), vec.end());
 
-  std::cout << "Before (vector): ";
-  printContainer(vec);
+  printContainer("Before (vec):", vec);
 #ifdef DISPLAY_DEBUG_MSG
-  std::cout << "Before (deque): ";
-  printContainer(deq);
+  printContainer("Before (deq):", deq);
 #endif
 
   double timeVector = getSortTime(vec);
   double timeDeque = getSortTime(deq);
 
-  std::cout << "After (vector): ";
-  printContainer(vec);
+  printContainer("After (vec):", vec);
 #ifdef DISPLAY_DEBUG_MSG
-  std::cout << "After (deque): ";
-  printContainer(deq);
+  printContainer("After (deq):", deq);
 #endif
 
   std::cout << std::fixed << std::setprecision(6);
@@ -101,4 +96,18 @@ Before: 141 79 526 321 [...]
 After: 79 141 321 526 [...]
 Time to process a range of 3000 elements with std::[..] : 62.14389 us
 Time to process a range of 3000 elements with std::[..] : 69.27212 us
+*/
+
+/*
+// 訂正前の内容
+template <typename T> void printContainer(const std::string &msg, const T &t) {
+  std::cout << msg;
+  for (size_t i = 0; i < t.size(); ++i) {
+    if (i == 4 && t.size() > 5) {
+      std::cout << "[...]\n";
+      break;
+    }
+    std::cout << t[i] << (i < t.size() - 1 ? " " : "\n");
+  }
+}
 */
