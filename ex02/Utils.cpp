@@ -6,11 +6,13 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 20:35:52 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/12 02:31:53 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/02/12 03:40:47 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Utils.hpp"
+#include <cstdlib>
+#include <limits>
 #include <sstream>
 #include <stdexcept>
 
@@ -31,7 +33,8 @@ void Utils::parseInput(int argc, const char **argv, std::vector<int> &vec) {
     char *endptr;
     errno = 0;
     long num = std::strtol(argv[i], &endptr, 10);
-    if (errno != 0 || num < 0 || num > INT_MAX || *endptr != '\0') {
+    if (errno != 0 || num < 0 || num > std::numeric_limits<int>::max() ||
+        *endptr != '\0') {
       std::ostringstream oss;
       oss << "Error: Invalid input: \"" << argv[i] << "\"";
       throw std::runtime_error(oss.str());
