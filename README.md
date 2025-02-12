@@ -125,7 +125,8 @@ TODO: long long はc98では使えないのでは？要確認
 	- 5.3.1 Minimum-Comparison Sorting, Merge insertion.
 
 TODO: vector / deque への最適化
-
+TODO: operator< や operator<= をオーバーロードして比較回数を数える
+TODO: Fibonacci数列や等比数列を用いるverのmergeInsertionSortをつくって、比較回数を検証する
 
 ## References
 
