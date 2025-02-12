@@ -4,32 +4,51 @@
 ## Topics
 - STL
 
-## Exercises
-- 各exerciseにおいて必ずコンテナを使う
-- 各課題で用いるコンテナは重複してはならない
+### 5.3.1. Minumum-Comparison Sorting (Knuth, TAOCP vol.3)　より
 
-### Exercise 00: Bitcoin Exchange
-- Bitcoin交換レートのCSVを{日付, ExchangeRate}の形式に整理する
-- 特定の日付（あるいはそれに最も近いlowerの日付）の値で計算する
-- mapを選択
+比較木と比較回数の理論的最小。より少ない比較回数を目指すMerge insertion sortについて
 
-TODO: headerの中身を単に読み飛ばさずに、正しい形式かをチェックする
-TODO: a float or a positive integer, between 0 and 1000 のチェック
+#### The best worst case.
+__比較木 （comparison tree）__
+- 内部ノード: 比較
+- 外部ノード: permutation（順列）
 
-### Exercise 01: Reverse Polish Notation
-- Reverse Polish Notation は算式記法。被演算子のあとに演算子を置く
-- 状態を持つ必要はない
-- stackを選択
+__最小の比較回数 （the worst case）__
+- $S(n)$: n個の要素をソートするのに必要な最小の比較回数
+- $2^k$: 深さ$k$の比較木は、最大で$2^k$の外部ノードを持つ
+- $S(n) = k$: 比較木の深さ $k$ 最悪のケースにおける最大の深さ（比較回数）
 
-TODO: long long はc98では使えないのでは？要確認
+__$n! <= 2^{S(n)}$__
+- $n!$: すべての順列の数
+- $2^{S(n)}$: 比較木の外部ノードの最大数
+最小の比較回数$S(n)$により、permutationは最大で$2^{S(n)}$.
+$n!$ 個の順列を区別するためには、比較木の外部ノードが少なくとも $n!$ 個以上要る
 
-### Exercise 02: PmergeMe
-- Merge-insertion sort
-- The Art of Computer Programming (TAOCP) を参照すればok
+よって、$S(n) \geq \log_2 (n!)$
+ソートアルゴリズムの最適な比較回数の理論的な下限（lower bound）を計算する
 
-#### Merge insertion.
+__最小の比較回数（情報理論的下限）__
+the information-theoretic lower bound
+- $S(n) \geq \log_2 (n!)$
 
-Merge Insertion Sort (Knuth, TAOCP vol.3)
+__Stirlingの近似__
+- $n! \approx \sqrt{2\pi n} \left( \frac{n}{e} \right)^n$ (Stirlingの公式)
+- $\ln(n!) \approx n\ln n - n + \frac{1}{2} \ln n + O(1)$ 対数を取る
+- $\log_2(n!) = \frac{\ln(n!)}{\ln 2} \approx \frac{n\ln n - n + \frac{1}{2} \ln n + O(1)}{\ln 2}$ 両辺を$\log_2$
+- $\log_2(n!) \approx n \log_2 n - \frac{n}{\ln 2} + \frac{1}{2} \log_2 n + O(1)$ ここで分母を展開（$\ln 2$は0.693）
+
+よって、比較木の最小比較回数の近似は
+- $S(n) \geq n \log_2 n - \frac{n}{\ln 2} + \frac{1}{2} \log_2 n + O(1)$
+
+__$S(n) = Θ(n log n)$__
+Binary Insertion Sort, Tree Selection Sort, Straight Two-Way Mergingどれも最悪の場合に $\Theta(n \log n)$ の比較回数に収束。そのため情報理論的下限（最小の比較回数）と、ソートアルゴリズムの比較回数は一致する。どんな比較ソートアルゴリズムも $O (n \log n)$ より高速にはなれない
+
+__理論的下限, Binary Insertion Sort, Straight Two-Way Merginの比較___
+Binary Insertion Sort も Straight Two-Way Merging も、必ずしも理論的な最小比較回数（情報理論的下限）には到達しない
+
+Lester Ford, Jr. と Selmer Johnson によって考案された Merge Insertion Sort は、より理論的下限に近い比較回数 でソートを行うことを目指したアルゴリズムで、 Merge Sort の分割統治 と Insertion Sort の適応的な挿入 を組み合わせ、従来のソートアルゴリズムより比較回数を削ずれる
+
+### Merge insertion について
 
 1. pairを作る
 
@@ -79,6 +98,34 @@ $J_n = \frac{2^n - (-1)^n}{3}$
  i = 5: prev: 21, curr: 43
  i = 6: prev: 43, curr: 85
  ```
+
+
+## Exercises
+- 各exerciseにおいて必ずコンテナを使う
+- 各課題で用いるコンテナは重複してはならない
+
+### Exercise 00: Bitcoin Exchange
+- Bitcoin交換レートのCSVを{日付, ExchangeRate}の形式に整理する
+- 特定の日付（あるいはそれに最も近いlowerの日付）の値で計算する
+- mapを選択
+
+TODO: headerの中身を単に読み飛ばさずに、正しい形式かをチェックする
+TODO: a float or a positive integer, between 0 and 1000 のチェック
+
+### Exercise 01: Reverse Polish Notation
+- Reverse Polish Notation は算式記法。被演算子のあとに演算子を置く
+- 状態を持つ必要はない
+- stackを選択
+
+TODO: long long はc98では使えないのでは？要確認
+
+### Exercise 02: PmergeMe
+- Merge-insertion sort
+- The Art of Computer Programming (TAOCP) を参照すればok
+	- 5.3.1 Minimum-Comparison Sorting, Merge insertion.
+
+TODO: vector / deque への最適化
+
 
 ## References
 
