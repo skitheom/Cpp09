@@ -107,7 +107,7 @@ $J_n = \frac{2^n - (-1)^n}{3}$
 ### Exercise 00: Bitcoin Exchange
 - Bitcoin交換レートのCSVを{日付, ExchangeRate}の形式に整理する
 - 特定の日付（あるいはそれに最も近いlowerの日付）の値で計算する
-- mapを選択
+- map
 
 TODO: headerの中身を単に読み飛ばさずに、正しい形式かをチェックする
 TODO: a float or a positive integer, between 0 and 1000 のチェック
@@ -115,7 +115,7 @@ TODO: a float or a positive integer, between 0 and 1000 のチェック
 ### Exercise 01: Reverse Polish Notation
 - Reverse Polish Notation は算式記法。被演算子のあとに演算子を置く
 - 状態を持つ必要はない
-- stackを選択
+- stack
 
 TODO: long long はc98では使えないのでは？要確認
 
@@ -127,7 +127,7 @@ TODO: long long はc98では使えないのでは？要確認
 TODO: vector / deque への最適化
 TODO: operator< や operator<= をオーバーロードして比較回数を数える
 TODO: Fibonacci数列や等比数列を用いるverのmergeInsertionSortをつくって、比較回数を検証する
-
+TODO: b11のあとはb10, b9, b8, ..., b6の順番で入れるべき。lower_boundに渡すend()も一個ずつ前にずらすこと。
 ## References
 
 [CPP Module 09(For 42 École Students Only)](https://projects.intra.42.fr/projects/cpp-module-09)
@@ -152,6 +152,7 @@ __Exercise 02__
 - [Measure execution time with high precision in C/C++](https://www.geeksforgeeks.org/measure-execution-time-with-high-precision-in-c-c/)
 c++11のchrono::high_resolution_clock::now();は使えない
 - [Jacobsthal and Jacobsthal-Lucas numbers](https://www.geeksforgeeks.org/jacobsthal-and-jacobsthal-lucas-numbers/) Jacobsthalの計算方法（ver.3を使用）
+- [Merge Sort – Data Structure and Algorithms Tutorials](https://www.geeksforgeeks.org/merge-sort/)
 
 ## ???
 
