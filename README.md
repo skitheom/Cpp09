@@ -121,13 +121,18 @@ TODO: long long はc98では使えないのでは？要確認
 
 ### Exercise 02: PmergeMe
 - Merge-insertion sort
-- The Art of Computer Programming (TAOCP) を参照すればok
-	- 5.3.1 Minimum-Comparison Sorting, Merge insertion.
+- The Art of Computer Programming (TAOCP) 5.3.1 Merge insertion. 参照
+
+TODO: generic function を使用しないよう修正する
+- Implement your algorithm for each container and avoid using a generic function
 
 TODO: vector / deque への最適化
 TODO: operator< や operator<= をオーバーロードして比較回数を数える
 TODO: Fibonacci数列や等比数列を用いるverのmergeInsertionSortをつくって、比較回数を検証する
 TODO: b11のあとはb10, b9, b8, ..., b6の順番で入れるべき。lower_boundに渡すend()も一個ずつ前にずらすこと。
+TODO: merge箇所でindexではなく、itを使うようにする
+TODO: typeid()を調べる
+
 ## References
 
 [CPP Module 09(For 42 École Students Only)](https://projects.intra.42.fr/projects/cpp-module-09)
