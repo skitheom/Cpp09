@@ -11,55 +11,77 @@
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+#include "Log.hpp"
 #include <cstdlib>
 
-PmergeMe::PmergeMe() {}
-
-PmergeMe::PmergeMe(const PmergeMe &other) { (void)other; }
-
-PmergeMe::~PmergeMe() {}
-
-PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
-  if (this != &other) {
-  }
-  return *this;
-}
-
-void PmergeMe::sort(std::vector<int> &vec) {
-  if (vec.size() < 2) {
+/*
+この処理は呼び出し側に持たせる方向でいいかもしれん
+ if (vec.size() < 2) {
     std::cerr << "Error: not enough elements to be sorted\n";
     std::exit(1);
   }
-  std::vector<std::pair<int, int> > pairs;
-  std::vector<int> sorted;
-
-  pairs.reserve(vec.size() / 2);
-  sorted.reserve(vec.size());
-
-#ifdef DISPLAY_DEBUG_MSG
-    std::cout << "\nSorting vector ...\n";
-#endif
-  mergeInsertionSort(vec, pairs, sorted);
-}
-
-void PmergeMe::sort(std::deque<int> &deq) {
-  if (deq.size() < 2) {
+if (deq.size() < 2) {
     std::cerr << "Error: not enough elements to be sorted\n";
     std::exit(1);
   }
-  std::deque<std::pair<int, int> > pairs;
-  std::deque<int> sorted;
+*/
 
+namespace PmergeMe {
+
+void sort(IntVec &unsorted) {
+
+  IntPairVec pairs;
+  IntVec sorted;
+
+  pairs.reserve(unsorted.size() / 2);
+  sorted.reserve(unsorted.size());
+
+  Log::log("\nSorting vector ...");
+  mergeInsertionSort(unsorted, pairs, sorted);
+}
+
+void sort(IntDeq &unsorted) {
+
+  IntPairDeq pairs;
+  IntDeq sorted;
+
+  Log::log("\nSorting deque ...");
+  mergeInsertionSort(unsorted, pairs, sorted);
+}
+void mergeInsertionSort(IntVec &unsorted, IntPairVec &pairs, IntVec &sorted);
+void mergeInsertionSort(U &unsorted, T &pairs, U &sorted) {
 #ifdef DISPLAY_DEBUG_MSG
-    std::cout << "\nSorting deque ...\n";
+  Utils::printContainer("\tUnsorted container:", unsorted);
 #endif
-  mergeInsertionSort(deq, pairs, sorted);
+  int singleElement = -1;
+  if (unsorted.size() % 2 != 0) {
+    singleElement = unsorted.back();
+    unsorted.pop_back();
+#ifdef DISPLAY_DEBUG_MSG
+    std::cout << "\tSingle element handled: " << singleElement << "\n";
+#endif
+  }
+  buildPairs(pairs, unsorted);
+#ifdef DISPLAY_DEBUG_MSG
+  Utils::printPairs("\tAfter buildPairs:", pairs);
+#endif
+  mergeSortPairs(pairs, 0, pairs.size() - 1);
+#ifdef DISPLAY_DEBUG_MSG
+  Utils::printPairs("\tAfter sortPairs: ", pairs);
+#endif
+  insertJacobsthal(pairs, sorted);
+#ifdef DISPLAY_DEBUG_MSG
+  Utils::printContainer("\tAfter insertJacobsthal:", sorted);
+#endif
+  if (singleElement != -1) {
+    binaryInsertion(sorted, singleElement);
+#ifdef DISPLAY_DEBUG_MSG
+    std::cout << "\tAfter inserting \'" << singleElement << "\' ";
+    Utils::printContainer(":", sorted);
+#endif
+  }
+  unsorted = sorted;
 }
 
-void PmergeMe::xreserve(std::vector<std::pair<int, int> > &pairs, size_t size) {
-  pairs.reserve(size);
-}
-void PmergeMe::xreserve(std::deque<std::pair<int, int> > &pairs, size_t size) {
-  (void)pairs;
-  (void)size;
-}
+void mergeInsertionSort(IntDeq &unsorted, IntPairDeq &pairs, IntDeq &sorted) {}
+} // namespace PmergeMe

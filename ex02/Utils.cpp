@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 20:35:52 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/12 03:40:47 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:25:32 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,9 @@
 #include <sstream>
 #include <stdexcept>
 
-Utils::Utils() {}
+namespace Utils {
 
-Utils::Utils(const Utils &other) { (void)other; }
-
-Utils::~Utils() {}
-
-Utils &Utils::operator=(const Utils &other) {
-  (void)other;
-  return *this;
-}
-
-void Utils::parseInput(int argc, const char **argv, std::vector<int> &vec) {
+void parseInput(int argc, const char **argv, IntVec &vec) {
   vec.reserve(argc - 1);
   for (int i = 1; i < argc; ++i) {
     char *endptr;
@@ -42,3 +33,5 @@ void Utils::parseInput(int argc, const char **argv, std::vector<int> &vec) {
     vec.push_back(static_cast<int>(num));
   }
 }
+
+} // namespace Utils

@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PmergeMe.hpp                                       :+:      :+:    :+:   */
+/*   Log.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 23:29:13 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/04/30 23:38:51 by sakitaha         ###   ########.fr       */
+/*   Created: 2025/04/30 21:26:45 by sakitaha          #+#    #+#             */
+/*   Updated: 2025/05/01 00:00:42 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PMERGEME_HPP
-#define PMERGEME_HPP
+#include "Log.hpp"
+#include <iostream>
 
-#include "Utils.hpp"
+namespace Log {
 
-namespace PmergeMe {
+void log(const std::string &msg) {
+#ifdef DISPLAY_DEBUG_MSG
+  std::cout << msg << std::endl;
+#endif
+}
 
-void sort(IntVec &unsorted);
-void sort(IntDeq &unsorted);
-void mergeInsertionSort(IntVec &unsorted, IntPairVec &pairs, IntVec &sorted);
-void mergeInsertionSort(IntDeq &unsorted, IntPairDeq &pairs, IntDeq &sorted);
+void log(const std::string &msg, int value) {
+#ifdef DISPLAY_DEBUG_MSG
+  std::cout << msg << ": " << value << std::endl;
+#endif
+}
 
-} // namespace PmergeMe
-
-#endif // PMERGEME_HPP
+} // namespace Log

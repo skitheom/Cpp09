@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 20:34:07 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/12 02:03:57 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:29:48 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,44 +19,24 @@
 #include <utility>
 #include <vector>
 
-class Utils {
-public:
-  static void parseInput(int argc, const char **argv, std::vector<int> &vec);
+// 型定義
+typedef std::vector<int> IntVec;
+typedef std::deque<int> IntDeq;
+typedef std::vector<std::pair<int, int> > IntPairVec;
+typedef std::deque<std::pair<int, int> > IntPairDeq;
 
-  template <typename T>
-  static void printContainer(const std::string &msg, const T &container) {
-    std::cout << msg;
-    size_t count = 0;
-    for (typename T::const_iterator it = container.begin();
-         it != container.end(); ++it) {
-      std::cout << " " << *it;
-#ifdef MUTE_DEBUG_PRINT
-      if (++count > 3) {
-        std::cout << " [...]";
-        break;
-      }
-#endif
-    }
-    (void)count;
-    std::cout << std::endl;
-  }
+// イテレータ定義
+typedef IntVec::iterator IntVecIt;
+typedef IntVec::const_iterator ConstIntVecIt;
+typedef IntDeq::iterator IntDeqIt;
+typedef IntDeq::const_iterator ConstIntDeqIt;
+typedef IntPairVec::iterator IntPairVecIt;
+typedef IntPairVec::const_iterator ConstIntPairVecIt;
+typedef IntPairDeq::iterator IntPairDeqIt;
+typedef IntPairDeq::const_iterator ConstIntPairDeqIt;
 
-  template <typename T>
-  static void printPairs(const std::string &msg, const T &pairs) {
-    std::cout << msg;
-    for (typename T::const_iterator it = pairs.begin(); it != pairs.end();
-         ++it) {
-      std::cout << " (" << it->first << ":" << it->second << ")";
-    }
-    std::cout << std::endl;
-  }
-
-private:
-  Utils();
-  Utils(const Utils &other);
-  ~Utils();
-
-  Utils &operator=(const Utils &other);
-};
+namespace Utils {
+void parseInput(int argc, const char **argv, IntVec &vec);
+}
 
 #endif // UTILS_HPP
