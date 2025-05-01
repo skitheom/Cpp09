@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 00:24:50 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/05/01 19:35:30 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:05:49 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ void insertFollowers(const IntPairVec &pairs, IntVec &vec, size_t prevJacob,
   // フォロワーは常に対応するリーダーより小さいため、フォロワー挿入時に対応するリーダーは
   // 探索範囲から除外できる。後ろから順にフォロワーを挿入するため、searchEndは常に一定
   const size_t searchEnd = vec.size() - 1;
+  std::cout << std::endl;
 
   //  currJacob最小値=3, prevJacob最小値=1 のため安全
   for (size_t i = currJacob - 1; i >= prevJacob; --i) {
     if (i < pairs.size()) {
-      std::cout << "\n\tInserting pairs[" << i
+      std::cout << "\tInserting pairs[" << i
                 << "].follower = " << pairs[i].second;
       binaryInsertion(vec, searchEnd, pairs[i].second);
     }
@@ -73,7 +74,7 @@ void insertJacobsthal(const IntPairVec &pairs, IntVec &vec, bool hasIsolated) {
   size_t prevJacob = 1, currJacob = 3;
 
   while (prevJacob < pairsSize) {
-    std::cout << "\n[ prevJacob=" << prevJacob << ", currJacob=" << currJacob
+    std::cout << "[ prevJacob = " << prevJacob << ", currJacob = " << currJacob
               << " ]" << std::endl;
     insertLeaders(pairs, vec, prevJacob, currJacob, hasIsolated);
     Log::logContainer("After insertLeaders  : ", vec);
@@ -86,47 +87,40 @@ void insertJacobsthal(const IntPairVec &pairs, IntVec &vec, bool hasIsolated) {
   }
 }
 
-void mergePairs(IntPairVec &pairs, size_t left, size_t mid, size_t right) {
+void mergePairs(IntPairVec &pairs, size_t low, size_t mid, size_t high) {
 
-  IntPairVec leftPairs;
-  IntPairVec rightPairs;
-  size_t sizeLeft = mid - left + 1;
-  size_t sizeRight = right - mid;
+  size_t i = low, j = mid + 1, k = 0;
 
-  leftPairs.reserve(sizeLeft);
-  rightPairs.reserve(sizeRight);
-  for (size_t i = 0; i < sizeLeft; ++i) {
-    leftPairs.push_back(pairs[left + i]);
-  }
-  for (size_t j = 0; j < sizeRight; ++j) {
-    rightPairs.push_back(pairs[mid + 1 + j]);
-  }
+  IntPairVec temp;
+  temp.resize(high - low + 1);
 
-  size_t leftIndex = 0, rightIndex = 0, pairsIndex = left;
-
-  while (leftIndex < sizeLeft && rightIndex < sizeRight) {
-    if (leftPairs[leftIndex].first <= rightPairs[rightIndex].first) {
-      pairs[pairsIndex++] = leftPairs[leftIndex++];
+  while ((i <= mid) && (j <= high)) {
+    if (pairs[i].first < pairs[j].first) {
+      temp[k++] = pairs[i++];
     } else {
-      pairs[pairsIndex++] = rightPairs[rightIndex++];
+      temp[k++] = pairs[j++];
     }
   }
-  while (leftIndex < sizeLeft) {
-    pairs[pairsIndex++] = leftPairs[leftIndex++];
+  while (j <= high) {
+    temp[k++] = pairs[j++];
   }
-  while (rightIndex < sizeRight) {
-    pairs[pairsIndex++] = rightPairs[rightIndex++];
+  while (i <= mid) {
+    temp[k++] = pairs[i++];
   }
+  for (i = low, k = 0; i <= high; i++, k++) {
+    pairs[i] = temp[k];
+  }
+  temp.clear(); // しなくていいけど
 }
 
-void mergeSortPairs(IntPairVec &pairs, size_t left, size_t right) {
-  if (left >= right) {
+void mergeSortPairs(IntPairVec &pairs, size_t low, size_t high) {
+  if (low >= high) {
     return;
   }
-  size_t mid = left + (right - left) / 2;
-  mergeSortPairs(pairs, left, mid);
-  mergeSortPairs(pairs, mid + 1, right);
-  mergePairs(pairs, left, mid, right);
+  size_t mid = (low + high) / 2;
+  mergeSortPairs(pairs, low, mid);
+  mergeSortPairs(pairs, mid + 1, high);
+  mergePairs(pairs, low, mid, high);
 }
 
 void buildPairs(IntPairVec &pairs, IntVec &vec) {
@@ -176,7 +170,7 @@ void mergeInsertionSort(IntPairVec &pairs, IntVec &vec) {
   }
 
   insertJacobsthal(pairs, vec, hasIsolated);
-  Log::logContainer("\nAfter Insertion: ", vec);
+  Log::logContainer("After Insertion: ", vec);
   Log::log("Count: ", CmpInt::getComparisonCount() - prevCount);
   prevCount = CmpInt::getComparisonCount();
   Log::log("Total: ", CmpInt::getComparisonCount());
