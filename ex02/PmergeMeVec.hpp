@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PmergeMe.hpp                                       :+:      :+:    :+:   */
+/*   PmergeMeVec.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 23:29:13 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/05/01 02:01:07 by sakitaha         ###   ########.fr       */
+/*   Created: 2025/05/01 00:20:14 by sakitaha          #+#    #+#             */
+/*   Updated: 2025/05/01 02:08:35 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PMERGE_ME_HPP
-#define PMERGE_ME_HPP
+#ifndef PMERGE_ME_VEC_HPP
+#define PMERGE_ME_VEC_HPP
 
-namespace PmergeMe {
-void run(int size, const char **userInput);
-} // namespace PmergeMe
+#include "Utils.hpp"
 
-#endif // PMERGE_ME_HPP
+namespace PmergeMeVec {
+void sort(IntVec &unsorted);
+} // namespace PmergeMeVec
+
+#endif

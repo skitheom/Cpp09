@@ -6,14 +6,14 @@
 #    By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 16:15:58 by sakitaha          #+#    #+#              #
-#    Updated: 2025/02/12 03:20:54 by sakitaha         ###   ########.fr        #
+#    Updated: 2025/05/01 15:41:01 by sakitaha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX      := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98 -MMD -MP
-
-SRCS     := PmergeMe.cpp Utils.cpp main.cpp
+SRCS     := CmpInt.cpp Log.cpp main.cpp PmergeMe.cpp PmergeMeDeq.cpp \
+            PmergeMeVec.cpp Utils.cpp
 OBJS     := $(SRCS:.cpp=.o)
 DEPS     := $(OBJS:.o=.d)
 NAME     := PmergeMe
@@ -75,8 +75,12 @@ endif
 	./$(NAME) "1" "" "3" || true
 	@echo "\n== Tests Completed =="
 
+21: $(NAME)
+	@echo "--- case 21 ---"
+	./$(NAME) 21 1 13 2 17 3 12 4 20 5 15 6 19 7 14 8 18 9 16 10 11
+
 test: CXXFLAGS += -DDISPLAY_DEBUG_MSG
-test: re run
+test: re 21
 
 large: CXXFLAGS += -DMUTE_DEBUG_PRINT
 large: re
@@ -109,4 +113,4 @@ debug: re run
 valgrind: all
 	valgrind --leak-check=full 	./$(NAME) 3 5 9 7 4
 
-.PHONY: all clean fclean re run test debug valgrind large
+.PHONY: all clean fclean re run test debug valgrind large 21

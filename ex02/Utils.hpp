@@ -6,13 +6,14 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 20:34:07 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/04/30 23:29:48 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/05/01 04:09:32 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
+#include "CmpInt.hpp"
 #include <cerrno>
 #include <deque>
 #include <iostream>
@@ -20,10 +21,11 @@
 #include <vector>
 
 // 型定義
-typedef std::vector<int> IntVec;
-typedef std::deque<int> IntDeq;
-typedef std::vector<std::pair<int, int> > IntPairVec;
-typedef std::deque<std::pair<int, int> > IntPairDeq;
+typedef std::vector<CmpInt> IntVec;
+typedef std::deque<CmpInt> IntDeq;
+typedef std::pair<CmpInt, CmpInt> IntPair;
+typedef std::vector<IntPair> IntPairVec;
+typedef std::deque<IntPair> IntPairDeq;
 
 // イテレータ定義
 typedef IntVec::iterator IntVecIt;
@@ -37,6 +39,7 @@ typedef IntPairDeq::const_iterator ConstIntPairDeqIt;
 
 namespace Utils {
 void parseInput(int argc, const char **argv, IntVec &vec);
-}
+double getTime(clock_t start, clock_t end);
+} // namespace Utils
 
 #endif // UTILS_HPP

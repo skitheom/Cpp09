@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PmergeMe.hpp                                       :+:      :+:    :+:   */
+/*   PmergeMeDeq.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 23:29:13 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/05/01 02:01:07 by sakitaha         ###   ########.fr       */
+/*   Created: 2025/05/01 00:22:10 by sakitaha          #+#    #+#             */
+/*   Updated: 2025/05/01 02:06:28 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PMERGE_ME_HPP
-#define PMERGE_ME_HPP
+#ifndef PMERGE_ME_DEQ_HPP
+#define PMERGE_ME_DEQ_HPP
 
-namespace PmergeMe {
-void run(int size, const char **userInput);
-} // namespace PmergeMe
+#include "Utils.hpp"
 
-#endif // PMERGE_ME_HPP
+namespace PmergeMeDeq {
+void sort(IntDeq &unsorted);
+} // namespace PmergeMeDeq
+
+#endif // PMERGE_ME_DEQ_HPP

@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:26:14 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/05/01 00:01:26 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/05/01 04:30:48 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 namespace Log {
 void log(const std::string &msg);
 void log(const std::string &msg, int value);
+void log(const std::string &msg, CmpInt &cmpInt);
 
 template <typename T> void logContainer(const std::string &msg, const T &t) {
 #ifdef DISPLAY_DEBUG_MSG
@@ -37,6 +38,8 @@ template <typename T> void logContainer(const std::string &msg, const T &t) {
   (void)count;
   std::cout << std::endl;
 #endif
+  (void)msg;
+  (void)t;
 }
 
 template <typename T> void logPairs(const std::string &msg, const T &t) {
@@ -47,6 +50,8 @@ template <typename T> void logPairs(const std::string &msg, const T &t) {
   }
   std::cout << std::endl;
 #endif
+  (void)msg;
+  (void)t;
 }
 } // namespace Log
 
