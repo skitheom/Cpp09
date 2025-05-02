@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 00:24:50 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/05/01 20:05:49 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/05/02 14:10:06 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,18 +176,114 @@ void mergeInsertionSort(IntPairVec &pairs, IntVec &vec) {
   Log::log("Total: ", CmpInt::getComparisonCount());
 }
 
-void sort(IntVec &vec) {
-  IntPairVec pairs;
-  pairs.reserve(vec.size() / 2 + 1);
+struct PairNode {
+  CmpInt leadValue;
+  struct PairNode *leader;
+  struct PairNode *follower;
+};
 
-  Log::log("\nSorting vector ...");
-  mergeInsertionSort(pairs, vec);
+typedef std::vector<PairNode>::iterator PairsIt;
+typedef std::vector<PairNode>::const_iterator ConstPairsIt;
+
+void mergeInsertion(std::vector<PairNode> &prevPairs) {
+  if (prevPairs.size() <= 1) {
+    return;
+  }
+  std::vector<PairNode> pairs;
+  pairs.reserve(prevPairs.size() / 2);
+
+  for (size_t i = 0; i + 1 < prevPairs.size(); ++i) {
+    struct PairNode node;
+    if (prevPairs[i].leadValue > prevPairs[i + 1].leadValue) {
+      node.leadValue = prevPairs[i].leadValue;
+      node.leader = &prevPairs[i];
+      node.follower = &prevPairs[i + 1];
+    } else {
+      node.leadValue = prevPairs[i + 1].leadValue;
+      node.leader = &prevPairs[i + 1];
+      node.follower = &prevPairs[i];
+    }
+    pairs.push_back(node);
+  }
+
+  bool hasIsolated = (prevPairs.size() % 2 != 0);
+  struct PairNode isolated;
+  if (hasIsolated) {
+    isolated.leadValue = -1;
+    isolated.leader = NULL;
+    isolated.follower = &prevPairs[prevPairs.size() - 1];
+  }
+
+  mergeInsertion(pairs);
+
+  // [...]
+}
+
+void mergeInsertionSortPairs(std::vector<PairNode> &pairs, size_t low, size_t high) {
+  if (low >= high) {
+    return;
+  }
+  size_t mid = (low + high) / 2;
+  mergeSortPairs(pairs, low, mid);
+  mergeSortPairs(pairs, mid + 1, high);
+  mergePairs(pairs, low, mid, high);
+}
+
+void sort(IntVec &vec) {
+
+  std::vector<PairNode> leafNodes;
+  leafNodes.reserve(vec.size());
+
+  for (ConstIntVecIt it = vec.begin(); it != vec.end(); ++it) {
+    struct PairNode node;
+    node.leadValue = *it;
+    node.leader = NULL;
+    node.follower = NULL;
+    leafNodes.push_back(node);
+  }
+
+  std::vector<PairNode> pairs;
+  pairs.reserve(leafNodes.size() / 2);
+
+  for (size_t i = 0; i + 1 < leafNodes.size(); ++i) {
+    struct PairNode node;
+    if (leafNodes[i].leadValue > leafNodes[i + 1].leadValue) {
+      node.leadValue = leafNodes[i].leadValue;
+      node.leader = &leafNodes[i];
+      node.follower = &leafNodes[i + 1];
+    } else {
+      node.leadValue = leafNodes[i + 1].leadValue;
+      node.leader = &leafNodes[i + 1];
+      node.follower = &leafNodes[i];
+    }
+    pairs.push_back(node);
+  }
+
+  bool hasIsolated = (leafNodes.size() % 2 != 0);
+  struct PairNode isolated;
+  if (hasIsolated) {
+    isolated.leadValue = -1;
+    isolated.leader = NULL;
+    isolated.follower = &leafNodes[leafNodes.size() - 1];
+  }
+
+  mergeInsertion(pairs);
+
+  std::vector<PairNode> main_chain;
+  std::vector<PairNode> unsorted;
 }
 
 } // namespace PmergeMeVec
 
 /*
 消したところ
+
+
+// IntPairVec pairs;
+  // pairs.reserve(vec.size() / 2 + 1);
+
+  // Log::log("\nSorting vector ...");
+  // mergeInsertionSort(pairs, vec);
 
   if (singleElement != -1) {
     // binaryInsertion(vec, vec.size(), singleElement);
