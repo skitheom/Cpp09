@@ -1,6 +1,7 @@
 #include "PmergeMeDeq.hpp"
 #include "Log.hpp"
 #include "PmergeMeVec.hpp"
+#include <algorithm>
 
 namespace PmergeMeDeq {
 

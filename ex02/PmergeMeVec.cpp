@@ -1,5 +1,6 @@
 #include "PmergeMeVec.hpp"
 #include "Log.hpp"
+#include <algorithm>
 
 namespace PmergeMeVec {
 
