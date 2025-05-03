@@ -1,13 +1,12 @@
 #include "PmergeMeDeq.hpp"
 #include "Log.hpp"
 #include "PmergeMeVec.hpp"
-#include <list>
 
 namespace PmergeMeDeq {
 
-typedef std::list<IntDeqIt> MainChain;
+typedef std::deque<IntDeqIt> MainChain;
 typedef MainChain::iterator MainIt;
-typedef std::list<IntDeqIt> Followers;
+typedef std::deque<IntDeqIt> Followers;
 typedef Followers::iterator FollowersIt;
 
 void swapGroups(IntDeqIt lhsIt, IntDeqIt rhsIt, size_t prevGroupSize) {
@@ -80,8 +79,8 @@ void mergeInsertionSort(IntDeq &deq, size_t prevGroupSize) {
   // leaderIdx は常に = 初期値 + currGroupSize * i;
   // followIdx は常に = leaderIdx - prevGroupSize;
 
-  std::list<IntDeqIt> mainchain; // keeps lastIt of each group
-  std::list<IntDeqIt> followers;
+  MainChain mainchain; // keeps lastIt of each group
+  Followers followers;
 
   IntDeqIt firstFollowerIt = groupLastIt(deq, 0, prevGroupSize);           // F0
   IntDeqIt firstLeaderIt = groupLastIt(deq, prevGroupSize, prevGroupSize); // L0

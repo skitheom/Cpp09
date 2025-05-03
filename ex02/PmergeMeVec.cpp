@@ -1,12 +1,11 @@
 #include "PmergeMeVec.hpp"
 #include "Log.hpp"
-#include <list>
 
 namespace PmergeMeVec {
 
-typedef std::list<IntVecIt> MainChain;
+typedef std::vector<IntVecIt> MainChain;
 typedef MainChain::iterator MainIt;
-typedef std::list<IntVecIt> Followers;
+typedef std::vector<IntVecIt> Followers;
 typedef Followers::iterator FollowersIt;
 
 void swapGroups(IntVecIt lhsIt, IntVecIt rhsIt, size_t prevGroupSize) {
@@ -79,8 +78,8 @@ void mergeInsertionSort(IntVec &vec, size_t prevGroupSize) {
   // leaderIdx は常に = 初期値 + currGroupSize * i;
   // followIdx は常に = leaderIdx - prevGroupSize;
 
-  std::list<IntVecIt> mainchain; // keeps lastIt of each group
-  std::list<IntVecIt> followers;
+  MainChain mainchain; // keeps lastIt of each group
+  Followers followers;
 
   IntVecIt firstFollowerIt = groupLastIt(vec, 0, prevGroupSize);           // F0
   IntVecIt firstLeaderIt = groupLastIt(vec, prevGroupSize, prevGroupSize); // L0
