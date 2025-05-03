@@ -6,14 +6,13 @@
 #    By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 16:15:58 by sakitaha          #+#    #+#              #
-#    Updated: 2025/05/01 15:41:01 by sakitaha         ###   ########.fr        #
+#    Updated: 2025/05/03 04:10:05 by sakitaha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX      := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98 -MMD -MP
-SRCS     := CmpInt.cpp Log.cpp main.cpp PmergeMe.cpp PmergeMeDeq.cpp \
-            PmergeMeVec.cpp Utils.cpp
+SRCS     := CmpInt.cpp Log.cpp main.cpp PmergeMe.cpp Utils.cpp
 OBJS     := $(SRCS:.cpp=.o)
 DEPS     := $(OBJS:.o=.d)
 NAME     := PmergeMe

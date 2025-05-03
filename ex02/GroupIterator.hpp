@@ -1,7 +1,13 @@
 #ifndef GROUP_ITERATOR_HPP
 #define GROUP_ITERATOR_HPP
 
+#include <algorithm>
+#include <cassert>
 #include <iterator>
+
+////////////////////////////////////////////////////////////
+// Class 定義
+////////////////////////////////////////////////////////////
 
 template <typename Iterator> class GroupIterator {
 
@@ -9,19 +15,13 @@ public:
   ////////////////////////////////////////////////////////////
   // Public types
 
-  // random_access_iteratorと明示 配列のように+, -, [] などの操作ができる
-  using iterator_category = std::random_access_iterator_tag;
-  // iterator_type という型名は、Iterator を指す
-  using iterator_type = Iterator;
-  // Iterator が指している要素の型を value_type とする
-  using value_type = typename std::iterator_traits<Iterator>::value_type;
-  // Iterator が返すポインタ型（使わないかもしれない）
-  using pointer = typename std::iterator_traits<Iterator>::pointer;
-  // Iterator が返す参照型 (int& あるいは *It)
-  using reference = typename std::iterator_traits<Iterator>::reference;
-  // 2つの Iterator の距離を表す型
-  using difference_type =
-      typename std::iterator_traits<Iterator>::difference_type;
+  typedef std::random_access_iterator_tag iterator_category;
+  typedef Iterator iterator_type;
+  typedef typename std::iterator_traits<Iterator>::value_type value_type;
+  typedef typename std::iterator_traits<Iterator>::pointer pointer;
+  typedef typename std::iterator_traits<Iterator>::reference reference;
+  typedef
+      typename std::iterator_traits<Iterator>::difference_type difference_type;
 
   ////////////////////////////////////////////////////////////
   // Orthodox Canonical Form
@@ -43,13 +43,16 @@ public:
   ////////////////////////////////////////////////////////////
   // Members access
 
+  // it位置のgroup左端（左端のfollower）のItを返す
   Iterator base() const { return it_; }
+  // 現在のgroupのサイズを返す
   std::size_t size() const { return size_; }
 
   ////////////////////////////////////////////////////////////
   // Element access
 
   // 要素アクセス（代表値：グループの最後）
+  // itがある位置のgroupの代表（右端のleader）への参照やポインタを返す
   reference operator*() const { return *(it_ + size_ - 1); }
   pointer operator->() const { return &(operator*()); }
 
@@ -78,7 +81,16 @@ public:
     --(*this);
     return tmp;
   }
-  // TODO: operator+= や operator-= なども実装してもいいかも
+
+  GroupIterator &operator+=(std::size_t n) {
+    it_ += size_ * n;
+    return *this;
+  }
+
+  GroupIterator &operator-=(std::size_t n) {
+    it_ -= size_ * n;
+    return *this;
+  }
 
   ////////////////////////////////////////////////////////////
   // Elements access operators
@@ -96,6 +108,104 @@ private:
   Iterator it_;      // 基底のイテレーター
   std::size_t size_; // 現在のgroupの大きさ（ex. pairなら2）
 };
+
+////////////////////////////////////////////////////////////
+// Non-member functions（自由関数）
+////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
+// Construction functions
+
+// 最初の階層（単要素）をsize=1としてgroup化するときに用いる
+template <typename Iterator>
+GroupIterator<Iterator> makeGroupIt(Iterator it, std::size_t size) {
+  return GroupIterator<Iterator>(it, size);
+}
+
+// 再帰的に深いグループ（ペアのペアの…）を作るときに、size=2として用いる
+template <typename Iterator>
+GroupIterator<Iterator> makeGroupIt(GroupIterator<Iterator> it,
+                                    std::size_t size) {
+  return GroupIterator<Iterator>(it.base(), size * it.size());
+}
+
+////////////////////////////////////////////////////////////
+// Swap as group
+
+// lhs と rhs の各 group（size 個分の要素）を一括で入れ替える
+template <typename Iterator1, typename Iterator2>
+void iter_swap(GroupIterator<Iterator1> lhs, GroupIterator<Iterator2> rhs) {
+  std::swap_ranges(lhs.base(), lhs.base() + lhs.size(), rhs.base());
+}
+
+////////////////////////////////////////////////////////////
+// Comparison operators
+
+template <typename Iterator1, typename Iterator2>
+bool operator==(const GroupIterator<Iterator1> &lhs,
+                const GroupIterator<Iterator2> &rhs) {
+  return lhs.base() == rhs.base();
+}
+
+template <typename Iterator1, typename Iterator2>
+bool operator!=(const GroupIterator<Iterator1> &lhs,
+                const GroupIterator<Iterator2> &rhs) {
+  return lhs.base() != rhs.base();
+}
+
+////////////////////////////////////////////////////////////
+// Relational operators
+
+// 比較演算子：グループの先頭位置（base）をもとに比較（It位置の比較）
+template <typename Iterator1, typename Iterator2>
+bool operator<(const GroupIterator<Iterator1> &lhs,
+               const GroupIterator<Iterator2> &rhs) {
+  return lhs.base() < rhs.base();
+}
+
+template <typename Iterator1, typename Iterator2>
+bool operator<=(const GroupIterator<Iterator1> &lhs,
+                const GroupIterator<Iterator2> &rhs) {
+  return lhs.base() <= rhs.base();
+}
+
+template <typename Iterator1, typename Iterator2>
+bool operator>(const GroupIterator<Iterator1> &lhs,
+               const GroupIterator<Iterator2> &rhs) {
+  return lhs.base() > rhs.base();
+}
+
+template <typename Iterator1, typename Iterator2>
+bool operator>=(const GroupIterator<Iterator1> &lhs,
+                const GroupIterator<Iterator2> &rhs) {
+  return lhs.base() >= rhs.base();
+}
+
+////////////////////////////////////////////////////////////
+// Arithmetic operators
+
+template <typename Iterator>
+GroupIterator<Iterator> operator+(GroupIterator<Iterator> it, std::size_t n) {
+  return it += n;
+}
+
+template <typename Iterator>
+GroupIterator<Iterator> operator+(std::size_t n, GroupIterator<Iterator> it) {
+  return it += n;
+}
+
+template <typename Iterator>
+GroupIterator<Iterator> operator-(GroupIterator<Iterator> it, std::size_t n) {
+  return it -= n;
+}
+
+template <typename Iterator>
+typename GroupIterator<Iterator>::difference_type
+operator-(const GroupIterator<Iterator> &lhs,
+          const GroupIterator<Iterator> &rhs) {
+  assert(lhs.size() == rhs.size());
+  return (lhs.base() - rhs.base()) / lhs.size();
+}
 
 #endif // GROUP_ITERATOR_HPP
 

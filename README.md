@@ -206,3 +206,4 @@ git pull gitlab main   # GitLab から `main` を pull
 
 
 
+https://codereview.stackexchange.com/questions/116367/ford-johnson-merge-insertion-sort
