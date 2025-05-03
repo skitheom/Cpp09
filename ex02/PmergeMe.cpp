@@ -72,7 +72,6 @@ void run(int size, const char **userInput) {
   Print::printContainer("After (vec):  ", vec);
   Print::printContainer("After (deq):  ", deq);
 
-
   std::cout << std::fixed << std::setprecision(1);
   std::cout << "Time to process a range of " << vec.size()
             << " elements with vector : " << getTime(vecStart, vecEnd)

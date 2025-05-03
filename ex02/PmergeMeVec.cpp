@@ -88,16 +88,19 @@ void mergeInsertionSort(IntVec &vec, size_t prevGroupSize) {
   mainchain.push_back(firstFollowerIt);
   mainchain.push_back(firstLeaderIt);
 
-  size_t prevJacob = 1, currJacob = 3;
+  size_t prevJacob = 1, currJacob = 3, leaderIdx = 0;
   const size_t limit = prevGroupSize * (vec.size() / prevGroupSize);
   bool reachedEnd = false; // if true, no more leaders to insert
+
+  Log::log("\nBinary insertion into mainchain for pairs of size:",
+           currGroupSize);
 
   while (!reachedEnd) {
     // insert leaders and pend followers
     // N=prevJacob, M=currJacob: Nth, N+1th, ... , M-1th
     for (size_t i = prevJacob; i < currJacob; ++i) {
 
-      size_t leaderIdx = currGroupSize - 1 + currGroupSize * i;
+      leaderIdx = currGroupSize - 1 + currGroupSize * i;
       size_t followIdx = leaderIdx - prevGroupSize;
 
       if (leaderIdx >= limit && followIdx >= limit) {
@@ -115,7 +118,8 @@ void mergeInsertionSort(IntVec &vec, size_t prevGroupSize) {
     }
 
     // insert followers back to mainchain backwards
-    const size_t searchEnd = mainchain.size() - 1;
+    const size_t searchEnd =
+        (leaderIdx < limit) ? mainchain.size() - 1 : mainchain.size();
 
     while (!followers.empty()) {
       IntVecIt followerIt = followers.back();
@@ -135,6 +139,9 @@ void mergeInsertionSort(IntVec &vec, size_t prevGroupSize) {
   IntVec cache;
   cache.reserve(vec.size());
 
+  Log::log("\nCopying back cached paris of size", currGroupSize);
+  Log::logContainer("Before overwrite: ", vec);
+
   // mainchainのitは、各groupの右端（代表）を指しているので注意
   for (MainIt mainIt = mainchain.begin(); mainIt != mainchain.end(); ++mainIt) {
     IntVecIt lastIt = *mainIt;
@@ -143,7 +150,6 @@ void mergeInsertionSort(IntVec &vec, size_t prevGroupSize) {
   }
   std::copy(cache.begin(), cache.end(), vec.begin());
 
-  Log::log("\nCopying back cached paris of size", currGroupSize);
   Log::logContainer("Overwritten section: ", vec);
 }
 } // namespace PmergeMeVec

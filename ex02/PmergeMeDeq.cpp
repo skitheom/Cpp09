@@ -89,7 +89,7 @@ void mergeInsertionSort(IntDeq &deq, size_t prevGroupSize) {
   mainchain.push_back(firstFollowerIt);
   mainchain.push_back(firstLeaderIt);
 
-  size_t prevJacob = 1, currJacob = 3;
+  size_t prevJacob = 1, currJacob = 3, leaderIdx = 0;
   const size_t limit = prevGroupSize * (deq.size() / prevGroupSize);
   bool reachedEnd = false; // if true, no more leaders to insert
 
@@ -98,7 +98,7 @@ void mergeInsertionSort(IntDeq &deq, size_t prevGroupSize) {
     // N=prevJacob, M=currJacob: Nth, N+1th, ... , M-1th
     for (size_t i = prevJacob; i < currJacob; ++i) {
 
-      size_t leaderIdx = currGroupSize - 1 + currGroupSize * i;
+      leaderIdx = currGroupSize - 1 + currGroupSize * i;
       size_t followIdx = leaderIdx - prevGroupSize;
 
       if (leaderIdx >= limit && followIdx >= limit) {
@@ -116,7 +116,8 @@ void mergeInsertionSort(IntDeq &deq, size_t prevGroupSize) {
     }
 
     // insert followers back to mainchain backwards
-    const size_t searchEnd = mainchain.size() - 1;
+    const size_t searchEnd =
+        (leaderIdx < limit) ? mainchain.size() - 1 : mainchain.size();
 
     while (!followers.empty()) {
       IntDeqIt followerIt = followers.back();
