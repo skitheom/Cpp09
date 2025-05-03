@@ -4,6 +4,7 @@
 #include "PmergeMeDeq.hpp"
 #include "PmergeMeVec.hpp"
 #include "Print.hpp"
+#include <cerrno>
 #include <cstdlib>
 #include <iomanip>
 #include <limits>

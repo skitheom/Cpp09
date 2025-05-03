@@ -57,10 +57,7 @@ Lester Ford, Jr. と Selmer Johnson によって考案された Merge Insertion 
 - Leaders:   大きい値を持つ
 - Followers: 小さい値を持つ
 
-2. 各pairをLeadersの値をもとにMerge Sort
-
-`a1->a2->a3->a4->a5->a6->a7->a8->a9->a10`
-大きい方の値(leaders)をsort
+2. 各pairをLeadersの値をもとにMerge Insertion Sort
 
 3. Jacobsthal 数列に従い、小さい方の値(followers)を挿入(二分探索)
 
@@ -122,16 +119,6 @@ TODO: long long はc98では使えないのでは？要確認
 ### Exercise 02: PmergeMe
 - Merge-insertion sort
 - The Art of Computer Programming (TAOCP) 5.3.1 Merge insertion. 参照
-
-TODO: generic function を使用しないよう修正する
-- Implement your algorithm for each container and avoid using a generic function
-
-TODO: vector / deque への最適化
-TODO: operator< や operator<= をオーバーロードして比較回数を数える
-TODO: Fibonacci数列や等比数列を用いるverのmergeInsertionSortをつくって、比較回数を検証する
-TODO: b11のあとはb10, b9, b8, ..., b6の順番で入れるべき。lower_boundに渡すend()も一個ずつ前にずらすこと。
-TODO: merge箇所でindexではなく、itを使うようにする
-TODO: typeid()を調べる
 
 ## References
 
