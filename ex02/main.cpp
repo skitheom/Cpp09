@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/09 01:51:57 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/05/01 04:48:18 by sakitaha         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "PmergeMe.hpp"
 #include <iostream>
 #include <vector>
@@ -23,23 +11,12 @@ int main(int argc, const char *argv[]) {
   try {
     PmergeMe::run(argc - 1, argv + 1);
   } catch (const std::exception &e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << "Error: " << e.what() << std::endl;
     return 1;
   }
 
   return 0;
 }
-
-/*
-// 訂正前の内容
-template <typename T> void Utils::printContainer(const std::string &msg, const T
-&t) { std::cout << msg; for (size_t i = 0; i < t.size(); ++i) { if (i == 4 &&
-t.size() > 5) { std::cout << "[...]\n"; break;
-    }
-    std::cout << t[i] << (i < t.size() - 1 ? " " : "\n");
-  }
-}
-*/
 
 /*
 $> ./PmergeMe 3 5 9 7 4

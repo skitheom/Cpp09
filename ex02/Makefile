@@ -6,13 +6,13 @@
 #    By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 16:15:58 by sakitaha          #+#    #+#              #
-#    Updated: 2025/05/03 04:10:05 by sakitaha         ###   ########.fr        #
+#    Updated: 2025/05/04 01:39:38 by sakitaha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX      := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98 -MMD -MP
-SRCS     := CmpInt.cpp Log.cpp main.cpp PmergeMe.cpp Utils.cpp
+SRCS     := CmpInt.cpp main.cpp PmergeMe.cpp PmergeMeDeq.cpp PmergeMeVec.cpp
 OBJS     := $(SRCS:.cpp=.o)
 DEPS     := $(OBJS:.o=.d)
 NAME     := PmergeMe
@@ -78,8 +78,12 @@ endif
 	@echo "--- case 21 ---"
 	./$(NAME) 21 1 13 2 17 3 12 4 20 5 15 6 19 7 14 8 18 9 16 10 11
 
+sorted: $(NAME)
+	@echo "\n--- case Sorted ---"
+	./$(NAME) 0 1 2 3 4 5 6 7 8 9
+
 test: CXXFLAGS += -DDISPLAY_DEBUG_MSG
-test: re 21
+test: re sorted
 
 large: CXXFLAGS += -DMUTE_DEBUG_PRINT
 large: re
@@ -112,4 +116,4 @@ debug: re run
 valgrind: all
 	valgrind --leak-check=full 	./$(NAME) 3 5 9 7 4
 
-.PHONY: all clean fclean re run test debug valgrind large 21
+.PHONY: all clean fclean re run test debug valgrind large 21 sorted

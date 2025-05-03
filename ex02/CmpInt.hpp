@@ -1,19 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   CmpInt.hpp                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 02:52:20 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/05/01 04:14:32 by sakitaha         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CMP_INT_HPP
 #define CMP_INT_HPP
 
+#include <deque>
 #include <ostream>
+#include <vector>
 
 class CmpInt {
 public:
@@ -24,7 +14,6 @@ public:
 
   CmpInt &operator=(const CmpInt &other);
 
-  // 比較演算子オーバーロード
   bool operator<(const CmpInt &rhs) const;
   bool operator<=(const CmpInt &rhs) const;
   bool operator>(const CmpInt &rhs) const;
@@ -41,6 +30,11 @@ private:
   int value_;
   static int cmpCount_;
 };
+
+typedef std::vector<CmpInt> IntVec;
+typedef IntVec::iterator IntVecIt;
+typedef std::deque<CmpInt> IntDeq;
+typedef IntDeq::iterator IntDeqIt;
 
 std::ostream &operator<<(std::ostream &os, const CmpInt &obj);
 
