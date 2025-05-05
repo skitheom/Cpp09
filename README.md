@@ -106,15 +106,11 @@ $J_n = \frac{2^n - (-1)^n}{3}$
 - 特定の日付（あるいはそれに最も近いlowerの日付）の値で計算する
 - map
 
-TODO: headerの中身を単に読み飛ばさずに、正しい形式かをチェックする
-TODO: a float or a positive integer, between 0 and 1000 のチェック
-
 ### Exercise 01: Reverse Polish Notation
 - Reverse Polish Notation は算式記法。被演算子のあとに演算子を置く
 - 状態を持つ必要はない
 - stack
 
-TODO: long long はc98では使えないのでは？要確認
 
 ### Exercise 02: PmergeMe
 - Merge-insertion sort
