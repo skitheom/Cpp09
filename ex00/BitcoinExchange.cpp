@@ -6,7 +6,7 @@
 /*   By: sakitaha <sakitaha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 16:09:48 by sakitaha          #+#    #+#             */
-/*   Updated: 2025/02/04 13:10:34 by sakitaha         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:37:27 by sakitaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,12 @@ std::map<time_t, double> BitcoinExchange::readCSV(const std::string &fileName) {
       throw std::logic_error(ERR_BAD_INPUT + line);
     }
     if (line.empty()) {
-      throw std::logic_error(ERR_BAD_INPUT + "empty");
+      throw std::logic_error(ERR_BAD_INPUT + "(empty line)");
     }
     std::string dateStr = trim(line.substr(0, commaIndex));
     std::string rateStr = trim(line.substr(commaIndex + 1));
-    rates.insert(std::make_pair(parseDate(dateStr), parseRate(rateStr)));
+    rates.insert(
+        std::pair<time_t, double>(parseDate(dateStr), parseRate(rateStr)));
   }
   inFile.close();
 #ifdef DISPLAY_DEBUG_MSG
@@ -98,6 +99,9 @@ void BitcoinExchange::processInput(const std::string &inputFile) {
   if (!std::getline(inFile, line, '\n')) {
     inFile.close();
     throw std::runtime_error(ERR_FILE_OPEN_FAILED + ": " + inputFile);
+  }
+  if (trim(line) != "date | value") {
+    throw std::runtime_error("invalid header format: " + line);
   }
   while (std::getline(inFile, line)) {
     try {
@@ -130,8 +134,8 @@ void BitcoinExchange::processLine(const std::string &line) {
   time_t date = parseDate(dateStr);
   double rate = parseRate(rateStr);
 
-  if (rate > 1000) {
-    throw std::runtime_error("Error: too large a number.");
+  if (rate > 1000.0) {
+    throw std::runtime_error("too large a number.");
   }
 
   std::map<time_t, double>::iterator it = bitcoinRates_.lower_bound(date);
