@@ -194,3 +194,8 @@ git pull gitlab main   # GitLab から `main` を pull
 
 
 https://codereview.stackexchange.com/questions/116367/ford-johnson-merge-insertion-sort
+
+
+https://dev.to/emuminov/human-explanation-and-step-by-step-visualisation-of-the-ford-johnson-algorithm-5g91
+
+https://www.jstor.org/stable/2308750
