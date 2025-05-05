@@ -130,6 +130,10 @@ void BitcoinExchange::processLine(const std::string &line) {
   time_t date = parseDate(dateStr);
   double rate = parseRate(rateStr);
 
+  if (rate > 1000) {
+    throw std::runtime_error("Error: too large a number.");
+  }
+
   std::map<time_t, double>::iterator it = bitcoinRates_.lower_bound(date);
 
   if (it == bitcoinRates_.end() || it->first > date) {

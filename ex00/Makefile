@@ -23,18 +23,8 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
--include $(DEPS)
-
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-clean:
-	$(RM) $(OBJS) $(DEPS)
-
-fclean: clean
-	$(RM) $(NAME)
-
-re: fclean all
 
 run: $(NAME)
 	@echo "== Running Tests  =="
@@ -44,14 +34,23 @@ run: $(NAME)
 	./$(NAME) edgecase.txt
 	@echo "== Tests Completed =="
 
-test: CXXFLAGS += -DDISPLAY_DEBUG_MSG
-test: re run
+debug: CXXFLAGS += -DDISPLAY_DEBUG_MSG
+debug: re run
 
-debug: CXXFLAGS += -fsanitize=address -g
-debug: $(NAME)
-	./$(NAME)
+asan: CXXFLAGS += -fsanitize=address -g
+asan: re run
 
 valgrind: all
-	valgrind --leak-check=full ./$(NAME)
+	valgrind --leak-check=full ./$(NAME) input.txt
 
-.PHONY: all clean fclean re run test debug valgrind
+clean:
+	$(RM) $(OBJS) $(DEPS)
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
+
+-include $(DEPS)
+
+.PHONY: all clean fclean re run debug asan valgrind
