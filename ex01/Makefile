@@ -23,8 +23,6 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
--include $(DEPS)
-
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
@@ -58,14 +56,15 @@ run: $(NAME)
 	@echo ""
 	@echo "== Tests Completed =="
 
-test: CXXFLAGS += -DDISPLAY_DEBUG_MSG
-test: re run
+debug: CXXFLAGS += -DDISPLAY_DEBUG_MSG
+debug: re run
 
-debug: CXXFLAGS += -fsanitize=address -g
-debug: $(NAME)
-	./$(NAME)
+asan: CXXFLAGS += -fsanitize=address -g
+asan: re run
 
-valgrind: all
-	valgrind --leak-check=full ./$(NAME)
+valgrind: re
+	valgrind --leak-check=full ./$(NAME) "8 9 * 9 - 9 - 9 - 4 - 1 +"
 
-.PHONY: all clean fclean re run test debug valgrind
+-include $(DEPS)
+
+.PHONY: all clean fclean re run debug asan valgrind

@@ -26,6 +26,14 @@ $(NAME): $(OBJS)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+clean:
+	$(RM) $(OBJS) $(DEPS)
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
+
 run: $(NAME)
 	@echo "== Running Tests  =="
 	@echo "--- Basic Test ---"
@@ -40,16 +48,8 @@ debug: re run
 asan: CXXFLAGS += -fsanitize=address -g
 asan: re run
 
-valgrind: all
+valgrind: re
 	valgrind --leak-check=full ./$(NAME) input.txt
-
-clean:
-	$(RM) $(OBJS) $(DEPS)
-
-fclean: clean
-	$(RM) $(NAME)
-
-re: fclean all
 
 -include $(DEPS)
 
