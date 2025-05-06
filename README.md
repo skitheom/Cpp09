@@ -4,6 +4,25 @@
 ## Topics
 - STL
 
+## Exercises
+- 各exerciseにおいて必ずコンテナを使う
+- 各課題で用いるコンテナは重複してはならない
+
+### Exercise 00: Bitcoin Exchange
+- Bitcoin交換レートのCSVを{日付, ExchangeRate}の形式に整理する
+- 特定の日付（あるいはそれに最も近いlowerの日付）の値で計算する
+- map
+
+### Exercise 01: Reverse Polish Notation
+- Reverse Polish Notation は算式記法。被演算子のあとに演算子を置く
+- 状態を持つ必要はない
+- stack
+
+
+### Exercise 02: PmergeMe
+- Merge-insertion sort
+- The Art of Computer Programming (TAOCP) 5.3.1 Merge insertion. 参照
+
 ### 5.3.1. Minumum-Comparison Sorting (Knuth, TAOCP vol.3)　より
 
 比較木と比較回数の理論的最小。より少ない比較回数を目指すMerge insertion sortについて
@@ -97,24 +116,7 @@ $J_n = \frac{2^n - (-1)^n}{3}$
  ```
 
 
-## Exercises
-- 各exerciseにおいて必ずコンテナを使う
-- 各課題で用いるコンテナは重複してはならない
 
-### Exercise 00: Bitcoin Exchange
-- Bitcoin交換レートのCSVを{日付, ExchangeRate}の形式に整理する
-- 特定の日付（あるいはそれに最も近いlowerの日付）の値で計算する
-- map
-
-### Exercise 01: Reverse Polish Notation
-- Reverse Polish Notation は算式記法。被演算子のあとに演算子を置く
-- 状態を持つ必要はない
-- stack
-
-
-### Exercise 02: PmergeMe
-- Merge-insertion sort
-- The Art of Computer Programming (TAOCP) 5.3.1 Merge insertion. 参照
 
 ## References
 
