@@ -46,7 +46,6 @@ run: $(NAME)
 	./$(NAME) "42 + 1" || true
 	./$(NAME) "7 % 4" || true
 	./$(NAME) "4 9 + 0 /" || true
-	./$(NAME) "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 *" || true
 	@echo "\n--- Additional Test ---"
 	./$(NAME) "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 *"
 	./$(NAME) "1 2 * 2 / 2 + 5 * 6 - 1 3 * - 4 5 * * 8 /"
