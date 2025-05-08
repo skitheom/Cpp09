@@ -398,3 +398,5 @@ https://www.jstor.org/stable/2308750
 
 	•	Knuth, D. E. (1998). The Art of Computer Programming, Vol. 3: Sorting and Searching.
 	•	Ford, L. R., & Johnson, S. M. (1959). A tournament problem.
+
+https://medium.com/@toukmati2000/cpp09-ford-johnson-algorithm-e6ad43288d4b
