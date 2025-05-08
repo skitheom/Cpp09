@@ -171,6 +171,7 @@ __Level:4, Group Size: 32, Pair数:0__
 __Level: 4, Pair数：　0__
 
 pairのないレベルのため、insertionもない
+
 ---
 __Level: 3, Pair数: 1__
 
