@@ -10,22 +10,79 @@
 
 ### Exercise 00: Bitcoin Exchange
 - Bitcoin交換レートのCSVを{日付, ExchangeRate}の形式に整理する
-- 特定の日付（あるいはそれに最も近いlowerの日付）の値で計算する
-- map
+- 当該の日付（あるいは直近の過去の日付）の値で計算する
+- std::map<time_t, double>
 
 ### Exercise 01: Reverse Polish Notation
 - Reverse Polish Notation は算式記法。被演算子のあとに演算子を置く
-- 状態を持つ必要はない
-- stack
+- () や 小数を受け取る必要はなく、`0-9` の整数を扱う（結果は小数になり得る）
+- std::stack<double>
 
 
 ### Exercise 02: PmergeMe
-- Merge-insertion sort
+- Merge-insertion sort を実装する
 - The Art of Computer Programming (TAOCP) 5.3.1 Merge insertion. 参照
+- 比較回数を数えるため、int型をwrapperするクラス`CmpInt`を用意
+- std::vector<CmpInt>, std::deque<CmpInt>
 
-### 5.3.1. Minumum-Comparison Sorting (Knuth, TAOCP vol.3)　より
+## Ford–Johnson アルゴリズム（Merge-Insertion Sort） について
+
+### 概要
+
+ex.02 では、Merge-Insertion Sort を用いて、最小の比較回数を目指すソートを実装する
+
+### 背景
+Merge-Insertion Sort は、比較回数を最小限に抑えることを目的としたソートアルゴリズム。テニスのトーナメントについての論文で考えられた手法
+理論的な下限（情報理論的下限）は、 $S(n) \geq \log_2(n!)$ （Stirlingの近似によって $\Theta(n \log n)$ に収束）
+
+
+アルゴリズムの構成（Knuth TAOCP Vol.3 §5.3.1 参照）
+
+1. ペアの生成とリーダー・フォロワーの分離
+	- 入力を2つずつペアに分け、それぞれの中で大小を比較
+	- 大きい方をリーダー（leader）、小さい方をフォロワー（follower）として分類
+	- これにより、リーダーだけで構成される部分列ができる
+
+2. リーダー列に対して再帰的にMerge-Insertion Sort
+	- リーダー列は再帰的にこの手法でソートされる
+	- 最終的にこのリーダー列が「主鎖（main chain）」になる
+
+3. フォロワーの挿入（Jacobsthal数列に基づく）
+	- フォロワーたちは、対応するリーダーの位置を目安にして主鎖に二分探索で挿入される
+	- この時、挿入の順序はJacobsthal数列に基づくことで、最適な比較範囲が得られる
+
+Jacobsthal数列:
+$J_n = \frac{2^n - (-1)^n}{3}$
+
+例: 1, 3, 5, 11, 21, 43, …
+
+⸻
+
+特徴と利点
+	•	比較回数を最小化することで、理論限界に非常に近い性能を発揮。
+	•	ただし、実装は通常の Merge Sort や Insertion Sort よりも複雑。
+
+⸻
+
+補足：他のソートとの比較
+
+アルゴリズム	最悪計算量	比較回数
+Merge Sort	O(n log n)	多め
+Insertion Sort	O(n²)	少数では速い
+Merge-Insertion Sort	O(n log n)	比較回数は最小に近い
+
+
+
+⸻
+
+参考文献
+	•	Knuth, D. E. (1998). The Art of Computer Programming, Vol. 3: Sorting and Searching.
+	•	Ford, L. R., & Johnson, S. M. (1959). A tournament problem.
 
 比較木と比較回数の理論的最小。より少ない比較回数を目指すMerge insertion sortについて
+
+#### 5.3.1. Minumum-Comparison Sorting (Knuth, TAOCP vol.3)　より
+
 
 #### The best worst case.
 __比較木 （comparison tree）__
@@ -118,6 +175,8 @@ $J_n = \frac{2^n - (-1)^n}{3}$
 
 
 
+
+
 ## References
 
 [CPP Module 09(For 42 École Students Only)](https://projects.intra.42.fr/projects/cpp-module-09)
@@ -148,46 +207,8 @@ c++11のchrono::high_resolution_clock::now();は使えない
 
 - [Learning c++98 in 2024](https://www.reddit.com/r/cpp_questions/comments/1986lga/learning_c98_in_2024/)
 
-### 複数のリモートリポジトリを設定する
 
-#### `git remote add`
-追加するラベルは、通常 origin とは別の名前を付ける
-```
-git remote add [任意のラベル] [新規で追加したいリモートリポジトリのアドレス]
-```
-Ex.
-```
-git remote add github git@github.com:skitheom/Cpp09.git
-git remote add gitlab git@gitlab.com:skitheom/Cpp09.git
-```
 
-#### `git remote -v`
-現在登録されているリモートリポジトリを確認
-```
- ~/code/cppModules/Cpp09/ex01/ [main*] git remote -v
-github  git@github.com:skitheom/Cpp09.git (fetch)
-github  git@github.com:skitheom/Cpp09.git (push)
-gitlab  git@gitlab.com:skitheom/Cpp09.git (fetch)
-gitlab  git@gitlab.com:skitheom/Cpp09.git (push)
-```
-
-#### 特定のリモートへ `push`, `fetch`, `pull`
-
-`git push [ラベル] main`
-
-Ex.
-```
-git push github main   # GitHub に push
-git push gitlab main   # GitLab に push
-
-git fetch github       # GitHub の最新状態を取得
-git fetch gitlab       # GitLab の最新状態を取得
-
-git pull github main   # GitHub から `main` を pull
-git pull gitlab main   # GitLab から `main` を pull
-```
-
-複数のリポジトリを設定することで、異なるリポジトリ間のコミット履歴を反映する
 
 
 
