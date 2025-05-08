@@ -25,36 +25,98 @@
 - 比較回数を数えるため、int型をwrapperするクラス`CmpInt`を用意
 - std::vector<CmpInt>, std::deque<CmpInt>
 
-## Ford–Johnson アルゴリズム（Merge-Insertion Sort） について
+## Ford–Johnson アルゴリズム（Merge-Insertion Sort）について
 
 ### 概要
 
-ex.02 では、Merge-Insertion Sort を用いて、最小の比較回数を目指すソートを実装する
+ex02 では、Ford–Johnson アルゴリズム（Merge-Insertion Sort）を用いて、最小の比較回数を目指すソートを実装する。
 
 ### 背景
-Merge-Insertion Sort は、比較回数を最小限に抑えることを目的としたソートアルゴリズム。テニスのトーナメントについての論文で考えられた手法
-理論的な下限（情報理論的下限）は、 $S(n) \geq \log_2(n!)$ （Stirlingの近似によって $\Theta(n \log n)$ に収束）
 
+Merge-Insertion Sort は、比較回数を極力抑えることを目的としたソートアルゴリズム。
+もともとはテニスのトーナメント構造に関する論文で導かれた手法で、Donald Knuth によって TAOCP Vol.3 §5.3.1 にて詳細に分析されている。
 
-アルゴリズムの構成（Knuth TAOCP Vol.3 §5.3.1 参照）
+---
 
-1. ペアの生成とリーダー・フォロワーの分離
-	- 入力を2つずつペアに分け、それぞれの中で大小を比較
-	- 大きい方をリーダー（leader）、小さい方をフォロワー（follower）として分類
-	- これにより、リーダーだけで構成される部分列ができる
+### アルゴリズムの構成（Knuth TAOCP Vol.3 §5.3.1 参照）
 
-2. リーダー列に対して再帰的にMerge-Insertion Sort
-	- リーダー列は再帰的にこの手法でソートされる
-	- 最終的にこのリーダー列が「主鎖（main chain）」になる
+#### 1. ペアの生成
 
-3. フォロワーの挿入（Jacobsthal数列に基づく）
-	- フォロワーたちは、対応するリーダーの位置を目安にして主鎖に二分探索で挿入される
-	- この時、挿入の順序はJacobsthal数列に基づくことで、最適な比較範囲が得られる
+- 入力列を2つずつのペアに分け、それぞれのペアで大小を比較する
+- 各ペア内の大きい要素（仮に *leader* と呼ぶ）を抜き出して部分列とする
+- 小さい要素（*follower*）は、あとで主鎖に挿入するために保存しておく
+- 奇数個の入力の場合、最後の要素はペアを持たず、単独で残る
 
-Jacobsthal数列:
-$J_n = \frac{2^n - (-1)^n}{3}$
+#### 2. Leader列への再帰的 Merge-Insertion Sort
+
+- leader だけで構成された部分列に対して、再帰的に Merge-Insertion Sort を適用する
+- 各ステップでも再びペアを作り、leader の列を更新していく
+- 最終的に、ソート済みの leader 列が **主鎖（main chain）** となる
+
+#### 3. Follower の挿入（Jacobsthal 数列に基づく）
+
+- 主鎖が構成されたら、follower を順番に主鎖へ挿入する
+- 最初の follower（b1）は対応する leader の前に無条件で挿入される
+- 残りの follower たちは、**Jacobsthal 数列**に従った順序で、主鎖に対して二分探索で挿入される
+- この数列は、二分探索における効率的な比較順序を導くために用いられる
+
+##### Jacobsthal 数列:
+$$
+J_n = \frac{2^n - (-1)^n}{3}
+$$
 
 例: 1, 3, 5, 11, 21, 43, …
+
+---
+
+### 備考
+
+- より大きな要素を *leader*、小さい要素を *follower* と呼ぶことは、Knuth の正式な用語ではない
+
+---
+
+###　具体例
+
+以下の21個の数字をソートするとする
+
+[11 21 13 1 2 17 12 3 4 20 5 15 6 18 7 14 10 19 9 16 8]
+
+まず、10個のpairができる
+各ペアのうち、より大きな要素を（代表）をleadersとし、より小さな要素（従属）をfollowersとする
+
+`K1:K2, K3:K4, ..., K10:K20`
+
+ここでは昇順にソートしたいので、ペアの左側をfollower/ペアの右側をleaderにしている
+Leader列に対する再帰的な呼び出しが起こり、これ以上ペアを作れない段階までペア化が進む
+ペアのペアのペア...とメタペアを作る感じになる
+
+Level: 0, Group Size: 2, Pair数: 10
+
+`(11 : 21) (1 : 13) (2 : 17) (3 : 12) (4 : 20) (5 : 15) (6 : 18) (7 : 14) (10 : 19) (9 : 16)`
+
+あまり ... `8`
+
+Level: 1, Group Size: 4, Pair数: 5
+
+`[(1:13) : (11:21)] [(3:12) : (2:17)] [(5:15) : (4:20)] [(7:14) : (6:18)] [(9:16) : (10:19)]`
+
+Level: 2, Group Size: 8, Pair数: 2
+
+`{[(3:12):(2:17)] : [(1:13):(11:21)]} {[(7:14):(6:18)] : [(5:15):(4:20)]}`
+
+あまり ... `[(9:16):(10:19)]`
+
+Level: 3, Group Size: 16, Pair数: 1
+
+`<{[(3:12):(2:17)]:[(1:13):(11:21)]} : {[(7:14):(6:18)]:[(5:15):(4:20)]}>`
+
+
+### 参考文献
+
+- Donald E. Knuth, *The Art of Computer Programming, Volume 3: Sorting and Searching*, §5.3.1.
+- Lester R. Ford, Jr. & Selmer M. Johnson, *A Tournament Problem*, 1959.
+
+
 
 ⸻
 
@@ -82,6 +144,8 @@ Merge-Insertion Sort	O(n log n)	比較回数は最小に近い
 比較木と比較回数の理論的最小。より少ない比較回数を目指すMerge insertion sortについて
 
 #### 5.3.1. Minumum-Comparison Sorting (Knuth, TAOCP vol.3)　より
+
+理論的な下限（情報理論的下限）は、 $S(n) \geq \log_2(n!)$ （Stirlingの近似によって $\Theta(n \log n)$ に収束）
 
 
 #### The best worst case.
