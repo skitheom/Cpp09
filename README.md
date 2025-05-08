@@ -161,10 +161,12 @@ __Level:4, Group Size: 32, Pair数:0__
 ```
 
 これ以上はpair化できないため、pairing終了
+
 ---
 #### Insertion
 
 これ以上のpairingができない段階で、Leaderによって構成された主鎖（main chain）が完成している。Follower（各ペアの小さい方の要素）および最後に残った余剰要素は、Jacobsthal 数列に基づいた順序で、**二分探索によって**主鎖に挿入される
+
 ---
 __Level: 4, Pair数：　0__
 
