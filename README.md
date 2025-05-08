@@ -299,6 +299,7 @@ Jacobsthal数=5の時:
 
 Jacobsthal数=11の時:
 `b_11` -> `b_10` -> `b_9` -> `b_8` -> `b_7` -> `b_6`
+
 ---
 #### 結果
 全体の要素数が21の時、Merge Insertion sort を使用することで
